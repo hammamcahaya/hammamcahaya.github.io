@@ -1,0 +1,13 @@
+# Screenshot template "undangan.eksklusif" — hak cipta pihak lain, jangan dipublikasikan
+referensi/gambar/
+
+# File desain lokal
+*.pen
+
+# Daftar tamu & link (data pribadi) — simpan di luar repo
+daftar-tamu*
+*.xlsx
+*.csv
+
+node_modules/
+.DS_Store

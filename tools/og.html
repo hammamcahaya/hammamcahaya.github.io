@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- Sumber gambar preview WhatsApp (1200x630). Buat ulang dengan: node tools/make-og.js -->
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  body { width: 1200px; height: 630px; overflow: hidden; background: var(--bg) url("../assets/img/motif.svg") 0 0 / 110px; }
+  .og { position: relative; width: 1200px; height: 630px; display: grid; place-items: center; text-align: center; }
+  .og .gunungan { width: auto; height: 600px; top: 50%; }
+  .og > div:last-child { position: relative; z-index: 2; }
+  .og .gunungan--l { left: -70px; transform: translateY(-50%); }
+  .og .gunungan--r { right: -70px; transform: translateY(-50%); }
+  .og .frame { position: absolute; inset: 22px; border: 4px double rgba(154, 106, 42, .55); }
+  .og p { margin: 0; }
+  .og .t { font-family: var(--script); font-size: 64px; color: var(--gold-ink); line-height: 1; }
+  .og .n { font-family: var(--script); font-size: 90px; color: var(--gold); line-height: 1.05; margin-top: 8px; }
+  .og .n span { font-size: .6em; color: var(--gold-ink); }
+  .og .d { margin-top: 26px; font-size: 30px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); }
+  .og .v { margin-top: 10px; font-size: 24px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+  <div class="og">
+    <div class="frame"></div>
+    <img class="gunungan gunungan--l" src="../assets/img/gunungan.svg" alt="">
+    <img class="gunungan gunungan--r" src="../assets/img/gunungan.svg" alt="">
+    <div>
+      <p class="t">The Wedding</p>
+      <p class="n">Cahaya <span>&amp;</span> Hammam</p>
+      <p class="d">Minggu, 29 November 2026</p>
+      <p class="v">ndalem Tjokrosukarnan, Surakarta</p>
+    </div>
+  </div>
+</body>
+</html>
