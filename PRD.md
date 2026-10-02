@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | v0.9 — posisi gunungan per halaman, motif latar ceplok bunga |
+| **Status** | v0.9 — posisi gunungan per halaman, motif ceplok bunga, modal nomor rekening |
 | **Tanggal** | 2 Oktober 2026 |
 | **Pemilik** | Muhammad Hammam Islami |
 | **Hari H** | Minggu, 29 November 2026 |
@@ -125,11 +125,18 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 - [ ] Tag Open Graph: `og:title` "The Wedding of Cahaya & Hammam", `og:description` "Minggu, 29 November 2026 · ndalem Tjokrosukarnan, Solo", dan `og:image` 1200×630 JPEG ≤ 300 KB dengan URL absolut (`https://hammamcahaya.github.io/assets/img/og-image.jpg`). `og:url` diisi `https://hammamcahaya.github.io/`.
 - [ ] Preview tampil benar di WhatsApp Android dan iOS.
 
+**US-8 — Nomor rekening untuk hadiah** *(ditambahkan di v0.9)*
+*As a tamu, I want to menyalin nomor rekening mempelai dengan sekali tekan so that saya bisa mengirim hadiah tanpa salah ketik.*
+- [ ] Di dasar halaman 4 ada tautan kecil yang tidak menonjol: "Tidak untuk dibuka".
+- [ ] Tautan membuka modal berisi teks jenaka pembuka dan dua kartu rekening: BCA 3920618714 a.n. Muhammad Hammam Islami, dan BCA 0154126119 a.n. Cahaya Dwi Dzullia.
+- [ ] Setiap kartu punya tombol "Salin nomor" yang menyalin nomor tanpa spasi ke clipboard dan menampilkan "Nomor rekening tersalin" selama 2 detik. Jika clipboard tidak tersedia, muncul petunjuk untuk menyalin manual; nomor juga bisa dipilih sekali ketuk.
+- [ ] Nomor rekening diverifikasi mempelai sebelum rilis (K4).
+
 ### 2.4 Non-Goals
 
 - ❌ **Musik latar** (dihapus di v0.2; bisa ditambahkan nanti tanpa mengubah arsitektur).
 - ❌ RSVP, buku tamu, ucapan, dan doa, karena membutuhkan backend.
-- ❌ Amplop digital, nomor rekening, dan QRIS.
+- ❌ QRIS. *(Nomor rekening ditambahkan di v0.9, lihat US-8.)*
 - ❌ Countdown dan "Simpan ke Kalender".
 - ❌ Galeri foto atau video.
 - ❌ Panel admin dan generator link.

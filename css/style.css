@@ -386,6 +386,22 @@ img, svg { display: block; }
 .chapter__title { font-size: .98rem; font-weight: 600; color: var(--gold-ink); line-height: 1.35; }
 .chapter__hint { font-size: .78rem; color: var(--ink-soft); line-height: 1.45; }
 
+/* tautan kecil di dasar halaman 4: sengaja tidak menonjol */
+.secret-link {
+  margin-top: 2.2rem;
+  padding: .6rem .8rem;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  font-size: .75rem;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgba(84, 68, 58, .35);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.secret-link:hover { color: var(--gold-ink); }
+
 /* ---------- Penanda halaman (titik vertikal) ---------- */
 
 .dots {
@@ -492,7 +508,7 @@ img, svg { display: block; }
   user-select: text;
 }
 .sheet__body > * { max-width: 38rem; margin-inline: auto; }
-.sheet__body p + p { margin-top: .9rem; }
+.sheet__body > p + p { margin-top: .9rem; }
 .sheet__body h3 {
   margin-top: 1.6rem;
   margin-bottom: .35rem;
@@ -526,6 +542,32 @@ img, svg { display: block; }
 }
 .sheet__fig .credit { display: block; font-size: .72rem; }
 .sheet__fig a { color: inherit; }
+
+.sheet--short { height: auto; }
+
+.accounts { display: grid; gap: .9rem; margin-top: 1.2rem; }
+.account {
+  display: grid;
+  justify-items: start;
+  gap: .1rem;
+  padding: 1rem 1.1rem 1.1rem;
+  background: var(--bg);
+  border: 1px solid rgba(126, 84, 32, .3);
+  border-left: 4px solid var(--gold);
+  border-radius: 2px 6px 6px 2px;
+}
+.account__bank { font-size: .8rem; font-weight: 600; letter-spacing: .06em; color: var(--gold-ink); }
+.account__number {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+  user-select: all;
+  -webkit-user-select: all;
+}
+.account__name { font-size: .9rem; color: var(--ink-soft); }
+.account__copy { width: auto; min-height: 44px; margin-top: .6rem; padding: .5rem 1.1rem; font-size: .9rem; }
+.account__status { min-height: 1.3em; margin-top: .2rem; font-size: .8rem; color: var(--gold-ink); }
 
 .steps { list-style: none; padding: 0; counter-reset: step; }
 .steps > li { position: relative; padding-left: 2.6rem; counter-increment: step; }
@@ -577,7 +619,7 @@ img, svg { display: block; }
   .sheet {
     inset: 0;
     width: min(680px, 92vw);
-    height: auto;
+    height: fit-content; /* dengan inset: 0, height: auto akan meregang sampai max-height */
     max-height: 84dvh;
     margin: auto;
     border-radius: 10px;

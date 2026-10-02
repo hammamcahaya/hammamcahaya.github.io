@@ -60,11 +60,7 @@
     });
   });
 
-  /* ---------------- Salin alamat ---------------- */
-
-  const copyBtn = document.getElementById("copy-address");
-  const copyStatus = document.getElementById("copy-status");
-  let copyTimer = 0;
+  /* ---------------- Salin teks (alamat & nomor rekening) ---------------- */
 
   function fallbackCopy(text) {
     const ta = document.createElement("textarea");
@@ -72,7 +68,8 @@
     ta.setAttribute("readonly", "");
     ta.style.position = "fixed";
     ta.style.opacity = "0";
-    document.body.appendChild(ta);
+    // di dalam <dialog> modal, elemen di luar dialog tidak bisa difokus
+    (document.querySelector("dialog[open]") || document.body).appendChild(ta);
     ta.select();
     let ok = false;
     try { ok = document.execCommand("copy"); } catch (_) { ok = false; }
@@ -80,22 +77,35 @@
     return ok;
   }
 
-  copyBtn.addEventListener("click", async () => {
-    const text = copyBtn.dataset.address;
-    let ok = false;
+  async function copyText(text) {
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(text);
-        ok = true;
-      } else {
-        ok = fallbackCopy(text);
+        return true;
       }
-    } catch (_) {
-      ok = fallbackCopy(text);
-    }
-    copyStatus.textContent = ok ? "Alamat tersalin" : "Alamat tidak bisa disalin. Tekan lama pada teks alamat untuk menyalin.";
-    window.clearTimeout(copyTimer);
-    copyTimer = window.setTimeout(() => { copyStatus.textContent = ""; }, ok ? 2000 : 5000);
+    } catch (_) { /* jatuh ke cara lama */ }
+    return fallbackCopy(text);
+  }
+
+  function showStatus(el, message, ms) {
+    el.textContent = message;
+    window.clearTimeout(el._timer);
+    el._timer = window.setTimeout(() => { el.textContent = ""; }, ms);
+  }
+
+  const copyBtn = document.getElementById("copy-address");
+  const copyStatus = document.getElementById("copy-status");
+  copyBtn.addEventListener("click", async () => {
+    const ok = await copyText(copyBtn.dataset.address);
+    showStatus(copyStatus, ok ? "Alamat tersalin" : "Alamat tidak bisa disalin. Tekan lama pada teks alamat untuk menyalin.", ok ? 2000 : 5000);
+  });
+
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    const status = btn.parentElement.querySelector(".account__status");
+    btn.addEventListener("click", async () => {
+      const ok = await copyText(btn.dataset.copy);
+      showStatus(status, ok ? "Nomor rekening tersalin" : "Tidak bisa menyalin. Tekan lama pada nomor untuk menyalin.", ok ? 2000 : 5000);
+    });
   });
 
   /* ---------------- Modal bab ---------------- */

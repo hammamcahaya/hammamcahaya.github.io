@@ -129,6 +129,7 @@ const visiblePage = (page) => page.evaluate(() => {
   console.log("Modal bab");
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+    await ctx.grantPermissions(["clipboard-read", "clipboard-write"]);
     const page = await ctx.newPage();
     await page.goto(BASE + "#4");
     const isOpen = (id) => page.evaluate((i) => document.getElementById(i).open, id);
@@ -155,6 +156,21 @@ const visiblePage = (page) => page.evaluate(() => {
     await page.click("#bab-jawa [data-close]");
     await page.waitForTimeout(150);
     check("tombol × menutup modal", !(await isOpen("bab-jawa")));
+
+    await page.click(".secret-link");
+    check("'Tidak untuk dibuka' membuka modal rekening", await isOpen("bab-hadiah"));
+    const accounts = await page.$$eval("#bab-hadiah [data-copy]", (els) => els.map((e) => e.dataset.copy));
+    check("dua nomor rekening tercantum", JSON.stringify(accounts) === JSON.stringify(["3920618714", "0154126119"]), JSON.stringify(accounts));
+    for (const [n, num] of accounts.entries()) {
+      await page.click(`#bab-hadiah .account:nth-child(${n + 1}) .account__copy`);
+      await page.waitForTimeout(100);
+      const clip = await page.evaluate(() => navigator.clipboard.readText());
+      const status = await page.textContent(`#bab-hadiah .account:nth-child(${n + 1}) .account__status`);
+      check(`tombol salin rekening ${n + 1} menyalin ${num}`, clip === num && status === "Nomor rekening tersalin", `→ "${clip}" / "${status}"`);
+    }
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(150);
+    check("Esc menutup modal rekening", !(await isOpen("bab-hadiah")));
 
     await page.click("[data-modal='bab-jawa']");
     await page.mouse.click(195, 20); // area backdrop di atas sheet
