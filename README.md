@@ -1,6 +1,6 @@
 # Undangan Cahaya & Hammam
 
-Undangan pernikahan digital berbentuk buku 4 halaman. HTML, CSS, dan JavaScript murni, tanpa build step.
+Undangan pernikahan digital 4 halaman yang digulir ke bawah. HTML, CSS, dan JavaScript murni, tanpa build step.
 Tayang di **https://hammamcahaya.github.io/**.
 
 ## Membuat link untuk tamu
@@ -52,7 +52,7 @@ python3 tools/prep_kayon.py
 NODE_PATH=~/.cache/undangan-test/node_modules node tools/trace_kayon.js
 ```
 
-Uji ini memeriksa 20 kasus nama tamu ([tests/tamu-cases.md](tests/tamu-cases.md)), navigasi (tombol, keyboard, seret, tombol Back), modal, dan overflow di 7 ukuran layar.
+Uji ini memeriksa 20 kasus nama tamu ([tests/tamu-cases.md](tests/tamu-cases.md)), navigasi gulir (tombol, titik penanda, hash URL), modal, dan overflow di 7 ukuran layar.
 
 ## Deploy
 
@@ -60,6 +60,7 @@ Push ke repo `hammamcahaya/hammamcahaya.github.io`, branch `main`. Aktifkan GitH
 
 ## Lisensi aset
 
-- Font Allura dan Poppins: SIL Open Font License.
+- Allura dan Poppins: SIL Open Font License.
+- Foto artikel: Wikimedia Commons, kredit dan lisensi tercantum di bawah setiap foto di modal.
 - Gunungan: hasil vektorisasi `kayon.png` yang disediakan pemilik. Pastikan lisensi gambar sumbernya mengizinkan publikasi.
-- Motif dan denah dibuat untuk proyek ini.
+- Motif latar dan denah dibuat untuk proyek ini.

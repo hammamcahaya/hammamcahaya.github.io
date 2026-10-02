@@ -42,7 +42,6 @@ def ring(cx, cy, r, n, rr):
 
 
 def tile(fill_paths, stroke_paths, bg, fg, stroke_w):
-    fp = "".join(fill_paths)
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{S}" height="{S}" viewBox="0 0 {S} {S}">
 <rect width="{S}" height="{S}" fill="{bg}"/>
 <g fill="{fg}">{''.join(f'<path d="{d}"/>' for d in fill_paths)}</g>

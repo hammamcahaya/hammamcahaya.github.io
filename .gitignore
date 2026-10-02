@@ -11,3 +11,7 @@ daftar-tamu*
 
 node_modules/
 .DS_Store
+
+# File font sumber (lisensi pihak ketiga) — yang dipublikasikan hanya subset .woff2
+assets/fonts/*.ttf
+assets/fonts/*.otf

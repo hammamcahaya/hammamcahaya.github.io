@@ -1,7 +1,7 @@
 /* =========================================================
    Undangan Cahaya & Hammam
-   Mobile-first. Satu buku potret: penuh layar di HP,
-   diletakkan di atas "meja" sogan di layar lebar.
+   Mobile-first. Empat halaman disusun ke bawah dan digulir:
+   penuh layar di HP, berupa lembaran di atas "meja" sogan di layar lebar.
    ========================================================= */
 
 @font-face { font-family: "Allura"; src: url("../assets/fonts/allura-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -26,8 +26,6 @@
   --sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --pad-x: max(30px, 12.5%);
-  --controls-h: 64px;
-  --flip-ms: 720ms;
   --ease-page: cubic-bezier(.32, .08, .24, 1);
 
   font-size: clamp(14px, 1.85dvh, 17px);
@@ -35,11 +33,13 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html, body { height: 100%; }
+html {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
-  overflow: hidden;
   font-family: var(--sans);
   font-weight: 400;
   line-height: 1.55;
@@ -57,82 +57,31 @@ img, svg { display: block; }
 
 :focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; border-radius: 4px; }
 
-/* ---------- Panggung & buku ---------- */
-
-.stage {
-  position: fixed;
-  inset: 0;
-}
-
-.book {
-  position: absolute;
-  inset: 0;
-  perspective: 2200px;
-  user-select: none;
-  -webkit-user-select: none;
-}
+/* ---------- Halaman ---------- */
 
 .page {
-  position: absolute;
-  inset: 0;
+  position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
   background: var(--bg) url("../assets/img/motif.svg") 0 0 / 96px;
-  transform-origin: left center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transition: transform var(--flip-ms) var(--ease-page);
-  touch-action: pan-y;
+  scroll-snap-align: start;
 }
-
-/* bayangan lipatan saat halaman dibalik */
-.page::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, rgba(43, 33, 24, .28), rgba(43, 33, 24, 0) 45%);
-  opacity: 0;
-  transition: opacity var(--flip-ms) var(--ease-page);
-  z-index: 30;
-}
-.page.is-turning::after { opacity: 1; }
-
-.page.is-flipped {
-  transform: rotateY(-180deg);
-  pointer-events: none;
-}
-
-.page.is-turning { z-index: 90 !important; }
-
-.page.is-dragging,
-.page.is-dragging::after { transition: none; }
 
 .page__body {
   position: relative;
   z-index: 2;
-  min-height: 100%;
+  min-height: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding:
-    calc(40px + env(safe-area-inset-top))
+    calc(48px + env(safe-area-inset-top))
     var(--pad-x)
-    calc(var(--controls-h) + 40px + env(safe-area-inset-bottom));
+    calc(56px + env(safe-area-inset-bottom));
 }
-
-.page__scroll {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  touch-action: pan-y;
-}
-.page__scroll::-webkit-scrollbar { display: none; }
-.page__scroll:focus-visible { outline-offset: -6px; }
 
 /* bingkai ganda seperti kartu undangan */
 .page__frame {
@@ -144,24 +93,8 @@ img, svg { display: block; }
   z-index: 1;
 }
 
-/* petunjuk masih ada isi di bawah */
-.scroll-hint {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: calc(var(--controls-h) + 90px + env(safe-area-inset-bottom));
-  z-index: 3;
-  display: grid;
-  place-items: end center;
-  padding-bottom: calc(var(--controls-h) + 22px + env(safe-area-inset-bottom));
-  pointer-events: none;
-  background: linear-gradient(rgba(247, 241, 230, 0), var(--bg) 55%);
-  opacity: 0;
-  transition: opacity .25s;
-}
-.scroll-hint svg { width: 22px; height: 22px; fill: none; stroke: var(--gold-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.page.has-more .scroll-hint { opacity: 1; }
+/* garis tipis pemisah antarhalaman di HP */
+.page + .page { border-top: 1px solid rgba(126, 84, 32, .18); }
 
 /* ---------- Gunungan ---------- */
 
@@ -177,9 +110,18 @@ img, svg { display: block; }
 .gunungan--l { left: 0; transform: translate(-56%, -50%); }
 .gunungan--r { right: 0; transform: translate(56%, -50%); }
 
-.gunungan--edge { width: clamp(120px, 38%, 230px); top: auto; bottom: 3%; }
-.gunungan--edge.gunungan--l { transform: translateX(-66%); }
-.gunungan--edge.gunungan--r { transform: translateX(66%); }
+/* halaman 2 & 4: satu gunungan di tengah, samar di belakang teks seperti tanda air */
+.gunungan--center {
+  left: 50%;
+  width: min(80%, 360px);
+  transform: translate(-50%, -50%);
+  opacity: .13;
+}
+
+/* halaman 3: gunungan di sudut bawah kiri dan kanan */
+.gunungan--bottom { width: clamp(120px, 38%, 230px); top: auto; bottom: 3%; }
+.gunungan--bottom.gunungan--l { transform: translateX(-62%); }
+.gunungan--bottom.gunungan--r { transform: translateX(62%); }
 
 /* ---------- Tombol ---------- */
 
@@ -222,8 +164,8 @@ img, svg { display: block; }
   font-size: clamp(3.3rem, 7.6dvh, 4.8rem);
   line-height: .92;
 }
-.cover__names span:last-child { margin-left: .7em; }
-.cover__names span:first-child { margin-right: .7em; }
+.cover__names span:last-child { margin-left: .6em; }
+.cover__names span:first-child { margin-right: .6em; }
 .cover__amp { font-size: .6em; color: var(--gold-ink); line-height: 1; }
 
 .cover__date {
@@ -252,13 +194,6 @@ img, svg { display: block; }
 }
 .guest__note { margin-top: .55rem; font-size: .7rem; font-style: italic; color: var(--ink-soft); }
 
-/* intip sudut halaman: petunjuk bahwa halaman bisa dibalik */
-.page--cover.is-peek { animation: peek 1.3s var(--ease-page) 1; }
-@keyframes peek {
-  0%, 100% { transform: rotateY(0); }
-  45% { transform: rotateY(-14deg); }
-}
-
 /* ---------- Halaman 2 · Undangan ---------- */
 
 .invite { font-size: .86rem; }
@@ -283,16 +218,9 @@ img, svg { display: block; }
 .lead { line-height: 1.7; text-wrap: pretty; }
 
 .couple { margin: 1.1rem 0 1.4rem; }
-.couple__name { margin-top: .3rem; font-weight: 400; }
-.couple__name .script { display: block; font-size: 2.45rem; text-wrap: balance; }
-.couple__degree {
-  display: block;
-  margin-top: .15rem;
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .08em;
-  color: var(--gold-ink);
-}
+.couple__name { margin-top: .3rem; font-size: 2.35rem; line-height: 1.15; text-wrap: balance; }
+/* gelar ditulis dengan huruf yang sama dengan nama, tetapi tidak terpisah dari baris nama */
+.couple__degree { white-space: nowrap; }
 .couple__parent { margin-top: .3rem; font-size: .82rem; color: var(--ink-soft); }
 .couple__with { margin: .9rem 0 .3rem; font-family: var(--script); font-size: 1.7rem; color: var(--gold-ink); line-height: 1; }
 
@@ -439,7 +367,7 @@ img, svg { display: block; }
   margin-block: auto;
   padding-top: 1.6rem;
 }
-.chapters__intro { font-size: .84rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; margin-bottom: .2rem; }
+.chapters__intro { max-width: 15.5rem; margin: 0 auto .2rem; font-size: .84rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty; }
 
 .chapter {
   display: grid;
@@ -458,60 +386,33 @@ img, svg { display: block; }
 .chapter__title { font-size: .98rem; font-weight: 600; color: var(--gold-ink); line-height: 1.35; }
 .chapter__hint { font-size: .78rem; color: var(--ink-soft); line-height: 1.45; }
 
-/* ---------- Navigasi ---------- */
+/* ---------- Penanda halaman (titik vertikal) ---------- */
 
-.controls {
-  position: absolute;
-  left: 50%;
-  bottom: calc(14px + env(safe-area-inset-bottom));
-  z-index: 100;
-  transform: translateX(-50%);
+.dots {
+  position: fixed;
+  right: calc(4px + env(safe-area-inset-right));
+  top: 50%;
+  z-index: 50;
+  transform: translateY(-50%);
   display: flex;
-  align-items: center;
-  gap: .25rem;
-  height: 52px;
-  padding: 0 4px;
-  background: rgba(251, 247, 240, .94);
-  border: 1px solid rgba(126, 84, 32, .3);
-  border-radius: 999px;
-  box-shadow: 0 2px 12px rgba(43, 33, 24, .14);
+  flex-direction: column;
 }
-
-.nav-btn {
+.dots a {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
+  width: 32px;
+  height: 32px;
 }
-.nav-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--gold-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.nav-btn:hover:not(:disabled) { background: rgba(154, 106, 42, .12); }
-.nav-btn:disabled { opacity: .3; cursor: default; }
-
-.dots { display: flex; }
-.dots button {
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-.dots button::before {
+.dots a::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 4px;
-  background: var(--line);
-  transition: width .25s, background-color .25s;
+  background: rgba(126, 84, 32, .35);
+  box-shadow: 0 0 0 2px rgba(247, 241, 230, .9);
+  transition: height .25s, background-color .25s;
 }
-.dots button[aria-current="true"]::before { width: 20px; background: var(--gold-ink); }
+.dots a[aria-current="true"]::before { height: 20px; background: var(--gold-ink); }
 
 /* ---------- Modal (bottom sheet di HP) ---------- */
 
@@ -608,6 +509,24 @@ img, svg { display: block; }
   font-style: italic;
 }
 
+.sheet__fig { margin-top: .2rem; margin-bottom: .9rem; }
+.sheet__fig img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--motif);
+}
+.sheet__fig figcaption {
+  margin-top: .4rem;
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.sheet__fig .credit { display: block; font-size: .72rem; }
+.sheet__fig a { color: inherit; }
+
 .steps { list-style: none; padding: 0; counter-reset: step; }
 .steps > li { position: relative; padding-left: 2.6rem; counter-increment: step; }
 .steps > li::before {
@@ -632,54 +551,28 @@ img, svg { display: block; }
 .panggih dt { font-weight: 600; }
 .panggih dd { margin: 0 0 .7rem; }
 
-/* ---------- Layar lebar: buku di atas meja sogan ---------- */
+/* ---------- Layar lebar: lembaran di atas meja sogan ---------- */
 
 @media (min-width: 700px) and (min-height: 560px) {
-  body { background: var(--sogan) url("../assets/img/motif-sogan.svg") 0 0 / 120px; }
-
-  .stage {
-    display: grid;
-    grid-template-rows: 1fr auto;
-    justify-items: center;
-    align-items: center;
-    padding: 24px 0 18px;
+  body {
+    background: var(--sogan) url("../assets/img/motif-sogan.svg") 0 0 / 120px;
+    padding: 24px 0;
   }
+  :root { font-size: clamp(14px, 1.7dvh, 16.5px); }
 
-  .book {
-    position: relative;
-    inset: auto;
-    height: min(calc(100dvh - 116px), 880px);
-    aspect-ratio: 9 / 16;
-    border-radius: 2px 6px 6px 2px;
-    box-shadow:
-      -3px 0 0 #6B4B31,
-      0 30px 60px rgba(0, 0, 0, .35),
-      0 8px 18px rgba(0, 0, 0, .25);
+  .page {
+    width: min(calc((100vh - 48px) * 9 / 16), 500px);
+    min-height: calc(100vh - 48px);
+    margin: 0 auto;
+    border-radius: 4px;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, .35), 0 6px 14px rgba(0, 0, 0, .22);
+    scroll-snap-align: center;
   }
-  /* punggung buku */
-  .book::before {
-    content: "";
-    position: absolute;
-    top: 0; bottom: 0; left: 0;
-    width: 18px;
-    z-index: 95;
-    pointer-events: none;
-    background: linear-gradient(90deg, rgba(43, 33, 24, .22), rgba(43, 33, 24, 0));
-  }
+  .page + .page { margin-top: 48px; border-top: 0; }
 
-  .page { border-radius: 2px 6px 6px 2px; cursor: grab; }
-  .page:active { cursor: grabbing; }
-
-  :root { font-size: clamp(14px, 1.7dvh, 16.5px); --controls-h: 0px; }
-
-  .page__body { padding-bottom: 44px; }
-  .scroll-hint { height: 72px; padding-bottom: 8px; }
-
-  .controls {
-    position: static;
-    transform: none;
-    margin-top: 16px;
-  }
+  .dots { right: 20px; }
+  .dots a::before { background: rgba(247, 241, 230, .4); box-shadow: none; }
+  .dots a[aria-current="true"]::before { background: var(--bg); }
 
   .sheet {
     inset: 0;
@@ -698,16 +591,14 @@ img, svg { display: block; }
 
 @media (max-height: 520px) {
   .gunungan { width: auto; height: 82%; }
-  .gunungan--edge { height: 64%; }
-  .page__body { padding-top: calc(24px + env(safe-area-inset-top)); }
+  .gunungan--center { height: 80%; }
+  .gunungan--bottom { height: 64%; }
+  .page__body { padding-block: calc(28px + env(safe-area-inset-top)) 32px; }
 }
 
 /* ---------- Gerak minimal ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .page { transition: opacity .2s linear, visibility .2s; }
-  .page.is-flipped { transform: none; opacity: 0; visibility: hidden; }
-  .page::after { display: none; }
-  .page--cover.is-peek { animation: none; }
+  html { scroll-behavior: auto; }
   .sheet[open] { animation: none; }
 }

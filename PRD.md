@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | v0.6 — gunungan diganti hasil vektorisasi kayon.png |
+| **Status** | v0.9 — posisi gunungan per halaman, motif latar ceplok bunga |
 | **Tanggal** | 2 Oktober 2026 |
 | **Pemilik** | Muhammad Hammam Islami |
 | **Hari H** | Minggu, 29 November 2026 |
@@ -68,16 +68,15 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 
 ### 2.3 User Stories & Acceptance Criteria
 
-**US-1 — Navigasi seperti buku**
-*As a tamu, I want to membalik halaman dengan geser ke kiri seperti membuka buku so that undangan terasa seperti undangan fisik.*
-- [ ] Ada tepat 4 halaman berorientasi potret.
-- [ ] Geser horizontal ≥ 50 px atau ≥ 20% lebar halaman membalik halaman. Arah gesture dikunci setelah 10 px pertama, sehingga geser vertikal tidak pernah membalik halaman.
-- [ ] Saat jari ditarik, halaman ikut berputar mengikuti jari (rotateY dengan pusat di tepi kiri). Saat dilepas, halaman menyelesaikan atau membatalkan balikan dalam 600–800 ms dengan 60 fps di perangkat kelas menengah.
-- [ ] Tombol ‹ › selalu terlihat di semua ukuran layar, bukan hanya di desktop (lihat §2.5.3). Di desktop ada juga navigasi dengan tombol ← → keyboard dan drag mouse.
-- [ ] Indikator 4 titik menunjukkan halaman aktif. Titik bisa diklik untuk lompat ke halaman tersebut.
-- [ ] Jika `prefers-reduced-motion: reduce`, animasi diganti crossfade ≤ 200 ms.
-- [ ] Di halaman pertama dan terakhir, tarikan ke arah yang tidak valid memberi efek pantulan kecil (≤ 15°).
-- [ ] Halaman aktif disimpan di hash URL (`#2`), sehingga tombol Back browser kembali ke halaman sebelumnya dan reload tetap di halaman yang sama.
+**US-1 — Navigasi gulir ke bawah** *(diubah di v0.7, sebelumnya balik halaman ke kiri)*
+*As a tamu, I want to menggulir undangan ke bawah so that saya bisa membacanya seperti halaman web biasa tanpa harus belajar gesture baru.*
+- [ ] Ada tepat 4 halaman yang disusun vertikal. Setiap halaman setinggi minimal satu layar, dan halaman yang isinya lebih panjang ikut memanjang.
+- [ ] Gulir memakai scroll-snap `proximity`: halaman berhenti rapi di awal halaman, tanpa mengunci gulir di halaman panjang.
+- [ ] Tombol "Buka Undangan" di sampul menggulir ke halaman 2.
+- [ ] Penanda 4 titik vertikal di tepi kanan menunjukkan halaman aktif, dan bisa diklik untuk lompat (target sentuh 32×32 px).
+- [ ] Halaman aktif ditulis di hash URL (`#2`) tanpa menambah riwayat, sehingga tombol Back keluar dari undangan dan tidak mundur per halaman. Link dengan `#3` langsung membuka halaman 3.
+- [ ] Di desktop, halaman tampil sebagai lembaran potret di atas latar sogan, dengan jarak antarlembar.
+- [ ] Jika `prefers-reduced-motion: reduce`, gulir otomatis berlangsung instan.
 
 **US-2 — Nama tamu personal**
 *As a mempelai, I want to mengirim link berisi `?tamu=Nama` so that setiap tamu merasa diundang secara pribadi.*
@@ -246,7 +245,7 @@ Situs statis tanpa build step. Pemilik melakukan push sendiri ke GitHub Pages.
 | `--gold-text` | `#7E5420` | teks emas kecil |
 | `--text` | `#2B2118` | teks isi |
 | `--line` | `#BFB4A3` | bingkai amplop |
-| Font script | Allura | judul dekoratif dan nama mempelai (gelar ditulis dengan sans agar terbaca) |
+| Font script | Allura | judul dekoratif dan nama mempelai beserta gelarnya |
 | Font sans | Poppins (400/500/600) | isi dan informasi |
 
 Nilai warna masih perkiraan dan perlu difinalisasi dengan color-picker dari gambar referensi. Font di-self-host dalam format `woff2` dengan subset Latin.
@@ -302,13 +301,17 @@ Jadwal rilis dan pengiriman undangan ditentukan sendiri oleh pemilik. Fase di ba
 | R7 | Cache preview WhatsApp | Preview lama tertahan | Finalisasi OG sebelum link pertama dikirim, dan tambahkan `?v=` pada og:image. |
 | R8 | Kesalahan data inti | Tamu salah datang | Data inti disimpan di satu objek `CONFIG`, dengan checklist K4. |
 
-### 5.3 Catatan implementasi (v0.5)
+### 5.3 Catatan implementasi (v0.9)
 
-- **Data inti** ditulis langsung di `index.html`, tidak di objek `CONFIG`. Situs ini hanya punya satu tempat tampil per data, sehingga objek terpisah tidak mengurangi risiko salah ketik, sementara HTML statis tetap terbaca tanpa JavaScript.
-- **Tombol navigasi** di desktop diletakkan di bawah buku (bukan di kiri-kanan) agar sama dengan HP.
-- **Ukuran ringkas** jadwal di halaman 2: tanggal ditulis sekali sebagai blok kalender, dengan jam akad dan resepsi di sampingnya.
-- **Hasil uji:** 78 uji otomatis lolos ([tests/run-tests.js](tests/run-tests.js)). Lighthouse mobile memberi skor 100/100/100/100 (Performance/Accessibility/Best Practices/SEO), dengan total 129 KB dan LCP 1,7 detik.
-- **Belum diuji:** perangkat fisik (iPhone/Android) dan preview WhatsApp asli. Keduanya perlu dicek setelah deploy.
+- **Navigasi** diubah dari balik halaman ke gulir vertikal (US-1).
+- **Gelar** ditulis sejajar dan dengan font yang sama dengan nama (Allura), tidak terpisah dari baris nama.
+- **Font script** sempat dicoba Brittany Signature, lalu dikembalikan ke Allura (SIL OFL).
+- **Gunungan:** halaman 1 memakai gunungan kiri-kanan di tengah tinggi halaman; halaman 2 dan 4 satu gunungan samar (opacity 13%) di tengah seperti tanda air; halaman 3 gunungan kiri-kanan di bagian bawah.
+- **Motif latar** sempat dicoba pola mandala bunga dari referensi, lalu dikembalikan ke motif ceplok bunga buatan sendiri ([tools/gen_motif.py](tools/gen_motif.py)).
+- **Foto artikel**: 7 foto di modal 1 dan 3 foto di modal 2 (siraman, panggih, sungkeman), semuanya dari Wikimedia Commons berlisensi bebas (CC BY, CC BY-SA, CC0, domain publik). Kredit dan tautan lisensi ditampilkan di bawah setiap foto. Foto dipotong 3:2 dan dikompres WebP (total 456 KB, dimuat hanya saat modal dibuka). Tidak ada foto berlisensi bebas untuk Tumurun (diganti lukisan Raden Saleh koleksi Tumurun), tarub, midodareni, dan ijab.
+- **Data inti** ditulis langsung di `index.html`, tidak di objek `CONFIG`.
+- **Hasil uji:** 49 uji otomatis lolos ([tests/run-tests.js](tests/run-tests.js)). Lighthouse mobile 100/100/100/100, total 171 KB, LCP 1,6 detik.
+- **Belum diuji:** perangkat fisik (iPhone/Android) dan preview WhatsApp asli.
 
 ### 5.4 Open Questions
 

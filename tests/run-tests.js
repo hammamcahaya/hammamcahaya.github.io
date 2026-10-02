@@ -44,9 +44,18 @@ function check(name, ok, detail = "") {
   else { failed++; console.log(`  FAIL ${name} ${detail}`); }
 }
 
-const currentPage = (page) => page.evaluate(() => {
-  const pages = [...document.querySelectorAll(".page")];
-  return pages.findIndex((p) => !p.inert);
+// halaman aktif = titik penanda yang bertanda aria-current
+const currentPage = async (page) => {
+  await page.waitForTimeout(250);
+  return page.evaluate(() => [...document.querySelectorAll("#dots a")].findIndex((d) => d.getAttribute("aria-current") === "true"));
+};
+// halaman yang benar-benar terlihat di tengah layar
+const visiblePage = (page) => page.evaluate(() => {
+  const y = window.innerHeight / 2;
+  return [...document.querySelectorAll(".page")].findIndex((p) => {
+    const r = p.getBoundingClientRect();
+    return r.top <= y && r.bottom >= y;
+  });
 });
 
 (async () => {
@@ -77,73 +86,38 @@ const currentPage = (page) => page.evaluate(() => {
     await ctx.close();
   }
 
-  /* ---------- 2. Navigasi ---------- */
-  console.log("Navigasi");
+  /* ---------- 2. Navigasi gulir ---------- */
+  console.log("Navigasi gulir");
   {
-    const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
     const page = await ctx.newPage();
     await page.goto(BASE + "?tamu=Anto");
-    check("mulai di halaman 1", (await currentPage(page)) === 0);
-    check("tombol sebelumnya nonaktif di halaman 1", await page.isDisabled("#prev"));
+    check("mulai di halaman 1", (await currentPage(page)) === 0 && (await visiblePage(page)) === 0);
 
     await page.click(".page--cover .btn--primary");
-    check("'Buka Undangan' ke halaman 2", (await currentPage(page)) === 1);
+    check("'Buka Undangan' menggulir ke halaman 2", (await visiblePage(page)) === 1 && (await currentPage(page)) === 1);
     check("URL berisi #2 dan ?tamu tetap ada", page.url().endsWith("?tamu=Anto#2"), page.url());
 
-    await page.click("#next");
-    check("tombol berikutnya ke halaman 3", (await currentPage(page)) === 2);
+    await page.click("#dots a[data-go='2']");
+    check("titik penanda ke halaman 3", (await visiblePage(page)) === 2 && (await currentPage(page)) === 2);
 
-    await page.keyboard.press("ArrowRight");
-    check("panah kanan ke halaman 4", (await currentPage(page)) === 3);
-    check("tombol berikutnya nonaktif di halaman 4", await page.isDisabled("#next"));
+    await page.mouse.move(195, 400);
+    await page.mouse.wheel(0, 2400);
+    await page.waitForTimeout(400);
+    check("gulir ke bawah sampai halaman 4", (await currentPage(page)) === 3, `(${await currentPage(page)})`);
 
-    await page.keyboard.press("ArrowLeft");
-    check("panah kiri ke halaman 3", (await currentPage(page)) === 2);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    check("gulir ke atas kembali ke halaman 1", (await currentPage(page)) === 0);
 
-    await page.goBack();
-    check("tombol Back browser kembali ke halaman 4", (await currentPage(page)) === 3);
-    await page.goBack();
-    check("Back lagi ke halaman 3", (await currentPage(page)) === 2);
+    const histLen = await page.evaluate(() => history.length);
+    await page.click("#dots a[data-go='3']");
+    check("pindah halaman tidak menambah riwayat", (await page.evaluate(() => history.length)) === histLen);
 
-    await page.click("#dots button[data-go='0']");
-    check("titik indikator lompat ke halaman 1", (await currentPage(page)) === 0);
+    await page.goto(BASE + "?tamu=Anto#3");
+    check("link #3 langsung membuka halaman 3", (await visiblePage(page)) === 2 && (await currentPage(page)) === 2);
 
-    // seret dengan mouse
-    const box = await page.locator("#book").boundingBox();
-    const y = box.y + box.height * 0.5;
-    await page.mouse.move(box.x + box.width * 0.8, y);
-    await page.mouse.down();
-    await page.mouse.move(box.x + box.width * 0.5, y, { steps: 8 });
-    await page.mouse.move(box.x + box.width * 0.2, y, { steps: 8 });
-    await page.mouse.up();
-    check("seret ke kiri membalik ke halaman 2", (await currentPage(page)) === 1);
-
-    await page.mouse.move(box.x + box.width * 0.6, y);
-    await page.mouse.down();
-    await page.mouse.move(box.x + box.width * 0.6 - 30, y, { steps: 4 });
-    await page.mouse.up();
-    check("seret pendek (30px) tidak membalik", (await currentPage(page)) === 1);
-
-    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
-    await page.mouse.down();
-    await page.mouse.move(box.x + box.width * 0.5 - 20, box.y + box.height * 0.8, { steps: 8 });
-    await page.mouse.up();
-    check("seret vertikal tidak membalik", (await currentPage(page)) === 1);
-
-    await page.mouse.move(box.x + box.width * 0.2, y);
-    await page.mouse.down();
-    await page.mouse.move(box.x + box.width * 0.85, y, { steps: 10 });
-    await page.mouse.up();
-    check("seret ke kanan kembali ke halaman 1", (await currentPage(page)) === 0);
-
-    await page.mouse.move(box.x + box.width * 0.2, y);
-    await page.mouse.down();
-    await page.mouse.move(box.x + box.width * 0.85, y, { steps: 10 });
-    await page.mouse.up();
-    check("seret ke kanan di halaman 1 tetap di halaman 1", (await currentPage(page)) === 0);
-
-    const cleared = await page.evaluate(() => [...document.querySelectorAll(".page")].every((p) => !p.style.transform));
-    check("tidak ada transform sisa setelah seret", cleared);
+    const hScroll = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
+    check("tidak ada gulir horizontal", !hScroll);
     await ctx.close();
   }
 
@@ -157,21 +131,21 @@ const currentPage = (page) => page.evaluate(() => {
 
     await page.click("[data-modal='bab-sekitar']");
     check("kartu 1 membuka modal", await isOpen("bab-sekitar"));
-    await page.keyboard.press("ArrowRight");
-    check("panah kanan tidak membalik halaman saat modal terbuka", (await currentPage(page)) === 3);
+    const imgs = await page.evaluate(() => [...document.querySelectorAll("#bab-sekitar .sheet__fig img")].length);
+    check("modal 1 memuat 7 foto", imgs === 7, `(${imgs})`);
     await page.keyboard.press("Escape");
     await page.waitForTimeout(150);
     check("Esc menutup modal", !(await isOpen("bab-sekitar")));
     const focused = await page.evaluate(() => document.activeElement && document.activeElement.dataset.modal);
     check("fokus kembali ke tombol pemicu", focused === "bab-sekitar", `(${focused})`);
-    check("tetap di halaman 4", (await currentPage(page)) === 3);
+    check("tetap di halaman 4", (await visiblePage(page)) === 3);
 
     await page.click("[data-modal='bab-jawa']");
     check("kartu 2 membuka modal", await isOpen("bab-jawa"));
     await page.goBack();
     await page.waitForTimeout(150);
     check("tombol Back menutup modal", !(await isOpen("bab-jawa")));
-    check("Back tidak keluar dari halaman 4", (await currentPage(page)) === 3);
+    check("Back tidak keluar dari halaman 4", (await visiblePage(page)) === 3);
 
     await page.click("[data-modal='bab-jawa']");
     await page.click("#bab-jawa [data-close]");
@@ -190,21 +164,21 @@ const currentPage = (page) => page.evaluate(() => {
   for (const [w, h] of [[320, 568], [360, 640], [390, 844], [412, 915], [844, 390], [768, 1024], [1440, 900]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "reduce" });
     const page = await ctx.newPage();
-    for (let i = 1; i <= 4; i++) {
-      await page.goto(`${BASE}?tamu=${encodeURIComponent("Keluarga Besar Bapak H. Sutrisno Wiryodiningrat, S.H., M.H.")}#${i}`);
-      const bad = await page.evaluate(() => {
-        const cur = [...document.querySelectorAll(".page")].find((p) => !p.inert);
-        const pr = cur.getBoundingClientRect();
-        const out = [];
-        cur.querySelectorAll(".page__body *:not(svg *)").forEach((el) => {
+    await page.goto(`${BASE}?tamu=${encodeURIComponent("Keluarga Besar Bapak H. Sutrisno Wiryodiningrat, S.H., M.H.")}`);
+    await page.evaluate(() => document.fonts.ready);
+    const bad = await page.evaluate(() => {
+      const out = [];
+      document.querySelectorAll(".page").forEach((pg, n) => {
+        const pr = pg.getBoundingClientRect();
+        pg.querySelectorAll(".page__body *:not(svg *)").forEach((el) => {
           const r = el.getBoundingClientRect();
           if (r.width === 0) return;
-          if (r.left < pr.left - 1 || r.right > pr.right + 1) out.push(`${el.className || el.tagName}`);
+          if (r.left < pr.left - 1 || r.right > pr.right + 1) out.push(`hal ${n + 1}: ${el.className || el.tagName}`);
         });
-        return out;
       });
-      check(`${w}x${h} halaman ${i}: tidak ada elemen keluar halaman`, bad.length === 0, bad.slice(0, 4).join(", "));
-    }
+      return out;
+    });
+    check(`${w}x${h}: tidak ada elemen keluar halaman`, bad.length === 0, bad.slice(0, 4).join(", "));
     await ctx.close();
   }
 

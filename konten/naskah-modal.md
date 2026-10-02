@@ -3,6 +3,7 @@
 > **Status:** Draf v0.2, perlu dikoreksi mempelai.
 > Semua fakta di Modal 1 diambil dari sumber publik yang tercantum di bagian bawah. Tidak ada lagi bagian [VERIFIKASI].
 > Lokasi bangunan di sekitar gedung mengikuti denah di `referensi/gambar/3.jpeg`.
+> Foto tiap bagian ada di `assets/img/artikel/`, dengan kredit di `index.html` (Wikimedia Commons).
 
 ---
 
