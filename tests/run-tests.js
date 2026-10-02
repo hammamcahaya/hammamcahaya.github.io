@@ -81,8 +81,12 @@ const visiblePage = (page) => page.evaluate(() => {
     }
     check("tidak ada alert() yang tereksekusi", dialogs === 0, `(${dialogs})`);
     check("tidak ada error JavaScript", errors.length === 0, errors.join(" | "));
+    await page.goto("about:blank");
     await page.goto(BASE + "?tamu=Anto#3");
-    check("#20 hash #3 membuka halaman 3", (await currentPage(page)) === 2);
+    // posisi dirapikan ulang setelah font selesai dimuat (tinggi halaman berubah)
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(300);
+    check("#20 hash #3 membuka halaman 3", (await currentPage(page)) === 2 && (await visiblePage(page)) === 2);
     await ctx.close();
   }
 
