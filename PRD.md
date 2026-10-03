@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | v0.9 — posisi gunungan per halaman, motif ceplok bunga, modal nomor rekening |
+| **Status** | v0.10 — musik latar versi lite, kartu rekening bercorak |
 | **Tanggal** | 2 Oktober 2026 |
 | **Pemilik** | Muhammad Hammam Islami |
 | **Hari H** | Minggu, 29 November 2026 |
@@ -133,9 +133,16 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 - [ ] Di samping nomor ada ikon salin (target sentuh 44×44 px) yang menyalin nomor tanpa spasi ke clipboard, berganti tanda centang, dan menampilkan "Nomor rekening tersalin" selama 2 detik. Jika clipboard tidak tersedia, muncul petunjuk untuk menyalin manual; nomor juga bisa dipilih sekali ketuk.
 - [ ] Nomor rekening diverifikasi mempelai sebelum rilis (K4).
 
+**US-9 — Musik latar versi lite** *(ditambahkan di v0.10)*
+*As a tamu, I want to mendengar lagu "Yen Ing Tawang Ana Lintang" saat membuka undangan so that suasananya terasa Jawa dan hangat, tanpa membuat undangan lambat dibuka.*
+- [ ] File lite: 2 menit 28 detik pertama lagu (dimulai setelah jeda hening 2,4 detik), fade-in 1,5 detik dan fade-out 4 detik, AAC 48 kbps mono, `faststart`; 906 KB (asli 6 MB).
+- [ ] `preload="none"`: lagu tidak diunduh sama sekali sampai tamu menekan "Buka Undangan" atau tombol musik, sehingga bobot muat awal (K2) tidak berubah.
+- [ ] Lagu diputar berulang (loop). Tombol bulat 44 px di pojok kiri bawah untuk putar/jeda, dengan `aria-pressed` dan label "Putar musik"/"Jeda musik".
+- [ ] Lagu dijeda saat tab/aplikasi disembunyikan dan dilanjutkan saat kembali jika sebelumnya sedang diputar.
+- [ ] Tidak ditemukan versi bebas royalti (komposisi Andjar Any masih dilindungi hak cipta); dipakai rekaman milik pemilik untuk undangan pribadi non-komersial.
+
 ### 2.4 Non-Goals
 
-- ❌ **Musik latar** (dihapus di v0.2; bisa ditambahkan nanti tanpa mengubah arsitektur).
 - ❌ RSVP, buku tamu, ucapan, dan doa, karena membutuhkan backend.
 - ❌ QRIS. *(Nomor rekening ditambahkan di v0.9, lihat US-8.)*
 - ❌ Countdown dan "Simpan ke Kalender".

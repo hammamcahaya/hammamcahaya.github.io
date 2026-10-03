@@ -112,6 +112,46 @@
     });
   });
 
+  /* ---------------- Musik latar ---------------- */
+
+  const bgm = document.getElementById("bgm");
+  const musicBtn = document.getElementById("music-toggle");
+  let resumeOnReturn = false;
+
+  function syncMusicButton() {
+    const playing = !bgm.paused;
+    musicBtn.setAttribute("aria-pressed", playing ? "true" : "false");
+    musicBtn.setAttribute("aria-label", playing ? "Jeda musik" : "Putar musik");
+  }
+
+  // browser hanya mengizinkan audio diputar setelah ada sentuhan/klik dari tamu
+  function playMusic() {
+    const p = bgm.play();
+    if (p && p.catch) p.catch(() => syncMusicButton());
+  }
+
+  bgm.addEventListener("play", syncMusicButton);
+  bgm.addEventListener("pause", syncMusicButton);
+
+  musicBtn.addEventListener("click", () => {
+    if (bgm.paused) playMusic();
+    else bgm.pause();
+  });
+
+  document.querySelectorAll("[data-music-start]").forEach((el) => {
+    el.addEventListener("click", () => { if (bgm.paused) playMusic(); });
+  });
+
+  // jeda saat tamu pindah aplikasi/tab, lanjutkan saat kembali
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      resumeOnReturn = !bgm.paused;
+      bgm.pause();
+    } else if (resumeOnReturn) {
+      playMusic();
+    }
+  });
+
   /* ---------------- Modal bab ---------------- */
 
   let lastTrigger = null;

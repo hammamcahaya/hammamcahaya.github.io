@@ -179,7 +179,33 @@ const visiblePage = (page) => page.evaluate(() => {
     await ctx.close();
   }
 
-  /* ---------- 4. Overflow di layar kecil ---------- */
+  /* ---------- 4. Musik latar ---------- */
+  console.log("Musik latar");
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    const audioRequests = [];
+    page.on("request", (r) => { if (r.url().includes("/assets/audio/")) audioRequests.push(r.url()); });
+    await page.goto(BASE + "?tamu=Anto");
+    await page.waitForLoadState("networkidle");
+    check("lagu tidak diunduh saat undangan dibuka", audioRequests.length === 0, `(${audioRequests.length} request)`);
+    check("tombol musik awalnya 'Putar musik'", (await page.getAttribute("#music-toggle", "aria-label")) === "Putar musik");
+
+    await page.click(".page--cover .btn--primary");
+    await page.waitForFunction(() => !document.getElementById("bgm").paused, null, { timeout: 5000 }).catch(() => {});
+    check("'Buka Undangan' mulai memutar lagu", await page.evaluate(() => !document.getElementById("bgm").paused));
+    check("lagu diunduh setelah tombol ditekan", audioRequests.length > 0);
+    check("tombol musik berubah menjadi 'Jeda musik'", (await page.getAttribute("#music-toggle", "aria-pressed")) === "true");
+
+    await page.click("#music-toggle");
+    check("tombol musik menjeda lagu", await page.evaluate(() => document.getElementById("bgm").paused));
+    await page.click("#music-toggle");
+    await page.waitForTimeout(200);
+    check("tombol musik memutar lagi", await page.evaluate(() => !document.getElementById("bgm").paused));
+    await ctx.close();
+  }
+
+  /* ---------- 5. Overflow di layar kecil ---------- */
   console.log("Overflow horizontal");
   for (const [w, h] of [[320, 568], [360, 640], [390, 844], [412, 915], [844, 390], [768, 1024], [1440, 900]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: "reduce" });

@@ -402,6 +402,38 @@ img, svg { display: block; }
 }
 .secret-link:hover { color: var(--gold-ink); }
 
+/* ---------- Tombol musik ---------- */
+
+.music-toggle {
+  position: fixed;
+  left: calc(14px + env(safe-area-inset-left));
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(126, 84, 32, .35);
+  border-radius: 50%;
+  background: rgba(251, 247, 240, .92);
+  box-shadow: 0 2px 10px rgba(43, 33, 24, .18);
+  cursor: pointer;
+}
+.music-toggle svg {
+  grid-area: 1 / 1;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--gold-ink);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.music-toggle .icon-on { display: none; }
+.music-toggle[aria-pressed="true"] .icon-on { display: block; }
+.music-toggle[aria-pressed="true"] .icon-off { display: none; }
+
 /* ---------- Penanda halaman (titik vertikal) ---------- */
 
 .dots {
@@ -655,6 +687,7 @@ img, svg { display: block; }
   .page + .page { margin-top: 48px; border-top: 0; }
 
   .dots { right: 20px; }
+  .music-toggle { left: 20px; bottom: 20px; }
   .dots a::before { background: rgba(247, 241, 230, .4); box-shadow: none; }
   .dots a[aria-current="true"]::before { background: var(--bg); }
 

@@ -1,6 +1,9 @@
 # Screenshot template "undangan.eksklusif" — hak cipta pihak lain, jangan dipublikasikan
 referensi/gambar/
 
+# Lagu asli (6 MB). Yang dipublikasikan hanya versi lite di assets/audio/
+referensi/music/
+
 # File desain lokal
 *.pen
 

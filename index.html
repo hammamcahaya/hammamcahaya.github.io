@@ -46,7 +46,7 @@
           <p class="guest__note">Mohon maaf apabila ada kesalahan penulisan nama atau gelar</p>
         </div>
 
-        <button class="btn btn--primary" type="button" data-go="1">Buka Undangan</button>
+        <button class="btn btn--primary" type="button" data-go="1" data-music-start>Buka Undangan</button>
       </div>
     </section>
 
@@ -212,6 +212,13 @@
     </section>
 
 </main>
+
+<!-- Musik latar: preload="none" → baru diunduh setelah tamu menekan "Buka Undangan" atau tombol musik -->
+<audio id="bgm" src="./assets/audio/yen-ing-tawang-lite.m4a" preload="none" loop></audio>
+<button class="music-toggle" id="music-toggle" type="button" aria-label="Putar musik" aria-pressed="false">
+  <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+  <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>
+</button>
 
 <nav class="dots" id="dots" aria-label="Halaman">
   <a href="#1" data-go="0" aria-label="Halaman 1, sampul"></a>

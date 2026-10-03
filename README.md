@@ -26,9 +26,20 @@ Setelah mengubah teks, buka situs di HP untuk memastikan tata letaknya masih rap
 | Warna & ukuran huruf | token `:root` di [css/style.css](css/style.css) |
 | Gunungan | Vektorisasi dari `referensi/gambar/kayon.png`: jalankan `python3 tools/prep_kayon.py`, lalu `tools/trace_kayon.js` (lihat di bawah) |
 | Motif latar | [tools/gen_motif.py](tools/gen_motif.py), lalu jalankan `python3 tools/gen_motif.py` |
+| Musik latar | `assets/audio/yen-ing-tawang-lite.m4a` (lihat perintah ffmpeg di bawah) |
 | Gambar preview WhatsApp | [tools/og.html](tools/og.html), lalu jalankan `tools/make-og.js` (lihat di bawah) |
 
 Jika gambar preview diubah setelah link pernah dikirim, naikkan angka `?v=` pada `og:image` di `index.html` agar WhatsApp mengambil gambar baru.
+
+## Membuat ulang musik versi lite
+
+Dari lagu asli di `referensi/music/` (tidak ikut repo), potong 0:02.4–2:31, mono AAC 48 kbps:
+
+```bash
+ffmpeg -ss 2.4 -to 151 -i "referensi/music/yen ing tawang ono Lintang.mp3" -map 0:a -vn -map_metadata -1 \
+  -ac 1 -af "afade=t=in:d=1.5,afade=t=out:st=144.6:d=4" -c:a aac -b:a 48k -movflags +faststart \
+  assets/audio/yen-ing-tawang-lite.m4a
+```
 
 ## Menjalankan di komputer
 
