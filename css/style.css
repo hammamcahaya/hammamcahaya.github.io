@@ -545,29 +545,71 @@ img, svg { display: block; }
 
 .sheet--short { height: auto; }
 
-.accounts { display: grid; gap: .9rem; margin-top: 1.2rem; }
+.accounts { display: grid; gap: 1rem; margin-top: 1.2rem; }
+
+/* kartu rekening bergaya kartu bank batik: sogan bermotif, gunungan di sisi kanan */
 .account {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  justify-items: start;
-  gap: .1rem;
-  padding: 1rem 1.1rem 1.1rem;
-  background: var(--bg);
-  border: 1px solid rgba(126, 84, 32, .3);
-  border-left: 4px solid var(--gold);
-  border-radius: 2px 6px 6px 2px;
+  gap: .15rem;
+  padding: 1.1rem 1.2rem 1rem;
+  color: var(--bg);
+  background: var(--sogan) url("../assets/img/motif-sogan.svg") 0 0 / 96px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(43, 33, 24, .25);
 }
-.account__bank { font-size: .8rem; font-weight: 600; letter-spacing: .06em; color: var(--gold-ink); }
+.account::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(214, 178, 120, .55);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.account__gunungan {
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  height: 135%;
+  width: auto;
+  transform: translateY(-50%);
+  opacity: .32;
+  pointer-events: none;
+}
+.account > :not(.account__gunungan) { position: relative; }
+
+.account__bank { font-size: .8rem; font-weight: 600; letter-spacing: .14em; color: #D6B278; }
+.account__row { display: flex; align-items: center; gap: .35rem; }
 .account__number {
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: .07em;
   font-variant-numeric: tabular-nums;
   user-select: all;
   -webkit-user-select: all;
 }
-.account__name { font-size: .9rem; color: var(--ink-soft); }
-.account__copy { width: auto; min-height: 44px; margin-top: .6rem; padding: .5rem 1.1rem; font-size: .9rem; }
-.account__status { min-height: 1.3em; margin-top: .2rem; font-size: .8rem; color: var(--gold-ink); }
+.account__name { font-size: .9rem; color: rgba(247, 241, 230, .82); }
+
+.account__copy {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.account__copy:hover { background: rgba(247, 241, 230, .12); }
+.account__copy:focus-visible { outline-color: #D6B278; }
+.account__copy svg { grid-area: 1 / 1; width: 22px; height: 22px; fill: none; stroke: #D6B278; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: opacity .2s; }
+.account__copy .icon-check { opacity: 0; stroke-width: 2.4; }
+.account__copy.is-copied .icon-copy { opacity: 0; }
+.account__copy.is-copied .icon-check { opacity: 1; }
+
+.account__status { min-height: 1.3em; font-size: .78rem; color: #D6B278; }
 
 .steps { list-style: none; padding: 0; counter-reset: step; }
 .steps > li { position: relative; padding-left: 2.6rem; counter-increment: step; }

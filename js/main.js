@@ -101,10 +101,14 @@
   });
 
   document.querySelectorAll("[data-copy]").forEach((btn) => {
-    const status = btn.parentElement.querySelector(".account__status");
+    const status = btn.closest(".account").querySelector(".account__status");
     btn.addEventListener("click", async () => {
       const ok = await copyText(btn.dataset.copy);
       showStatus(status, ok ? "Nomor rekening tersalin" : "Tidak bisa menyalin. Tekan lama pada nomor untuk menyalin.", ok ? 2000 : 5000);
+      // ikon salin berganti tanda centang selama status tampil
+      btn.classList.toggle("is-copied", ok);
+      window.clearTimeout(btn._timer);
+      btn._timer = window.setTimeout(() => btn.classList.remove("is-copied"), 2000);
     });
   });
 

@@ -129,7 +129,8 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 *As a tamu, I want to menyalin nomor rekening mempelai dengan sekali tekan so that saya bisa mengirim hadiah tanpa salah ketik.*
 - [ ] Di dasar halaman 4 ada tautan kecil yang tidak menonjol: "Tidak untuk dibuka".
 - [ ] Tautan membuka modal berisi teks jenaka pembuka dan dua kartu rekening: BCA 3920618714 a.n. Muhammad Hammam Islami, dan BCA 0154126119 a.n. Cahaya Dwi Dzullia.
-- [ ] Setiap kartu punya tombol "Salin nomor" yang menyalin nomor tanpa spasi ke clipboard dan menampilkan "Nomor rekening tersalin" selama 2 detik. Jika clipboard tidak tersedia, muncul petunjuk untuk menyalin manual; nomor juga bisa dipilih sekali ketuk.
+- [ ] Kartu bergaya kartu bank batik (latar sogan bermotif ceplok, gunungan samar di sisi kanan, bingkai emas tipis).
+- [ ] Di samping nomor ada ikon salin (target sentuh 44×44 px) yang menyalin nomor tanpa spasi ke clipboard, berganti tanda centang, dan menampilkan "Nomor rekening tersalin" selama 2 detik. Jika clipboard tidak tersedia, muncul petunjuk untuk menyalin manual; nomor juga bisa dipilih sekali ketuk.
 - [ ] Nomor rekening diverifikasi mempelai sebelum rilis (K4).
 
 ### 2.4 Non-Goals
