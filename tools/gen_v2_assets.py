@@ -67,7 +67,7 @@ def tile(fill, opacity):
 def main():
     gunungan_prada()
     (IMG / "truntum-prada.svg").write_text(tile("#C9A15B", ".16"))
-    (IMG / "truntum-kertas.svg").write_text(tile("#8A6430", ".13"))
+    (IMG / "truntum-kertas.svg").write_text(tile("#8A6430", ".08"))
     for n in ["gunungan-prada.svg", "truntum-prada.svg", "truntum-kertas.svg"]:
         print(n, (IMG / n).stat().st_size, "bytes")
 

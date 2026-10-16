@@ -3,13 +3,15 @@
  * Kebutuhan: Node 18+, Google Chrome, dan paket playwright-core
  * (dipasang di luar repo, mis. `npm i --prefix ~/.cache/undangan-test playwright-core`).
  *
- * Jalankan dari root proyek:
+ * Jalankan dari root proyek, sebutkan versi yang diuji (bawaan: v2):
  *   python3 -m http.server 8765 &
- *   NODE_PATH=~/.cache/undangan-test/node_modules node tests/run-tests.js
+ *   NODE_PATH=~/.cache/undangan-test/node_modules node tests/run-tests.js v1
  */
 const { chromium } = require("playwright-core");
 
-const BASE = process.env.BASE_URL || "http://localhost:8765/";
+const VERSION = process.argv[2] || "v2";
+const ROOT = process.env.ROOT_URL || "http://localhost:8765/";
+const BASE = process.env.BASE_URL || `${ROOT}${VERSION}/`;
 const CHROME = process.env.CHROME || "/usr/bin/google-chrome";
 
 const A80 = "A".repeat(80);
@@ -237,7 +239,20 @@ const visiblePage = (page) => page.evaluate(() => {
     await ctx.close();
   }
 
+  /* ---------- 6. Halaman pilih versi ---------- */
+  console.log("Pilih versi (root)");
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await ctx.newPage();
+    await page.goto(`${ROOT}?tamu=Bapak+Anto`);
+    const href = await page.getAttribute(`[data-versi='${VERSION}']`, "href");
+    check(`tautan ${VERSION} membawa nama tamu`, href === `/${VERSION}/?tamu=Bapak+Anto`, `→ ${href}`);
+    await page.click(`[data-versi='${VERSION}']`);
+    check(`tautan ${VERSION} membuka undangan`, (await page.textContent("#guest-name")) === "Bapak Anto");
+    await ctx.close();
+  }
+
   await browser.close();
-  console.log(failed ? `\n${failed} uji GAGAL` : "\nSemua uji lolos");
+  console.log(failed ? `\n${VERSION}: ${failed} uji GAGAL` : `\n${VERSION}: semua uji lolos`);
   process.exit(failed ? 1 : 0);
 })();
