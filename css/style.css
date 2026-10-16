@@ -107,8 +107,8 @@ img, svg { display: block; }
   pointer-events: none;
   -webkit-user-drag: none;
 }
-.gunungan--l { left: 0; transform: translate(-56%, -50%); }
-.gunungan--r { right: 0; transform: translate(56%, -50%); }
+.gunungan--l { left: 0; transform: translate(-60%, -50%); }
+.gunungan--r { right: 0; transform: translate(60%, -50%); }
 
 /* halaman 2 & 4: satu gunungan di tengah, samar di belakang teks seperti tanda air */
 .gunungan--center {
@@ -152,7 +152,8 @@ img, svg { display: block; }
 
 /* ---------- Halaman 1 · Sampul ---------- */
 
-.cover { gap: 0; }
+/* sampul: kolom teks selebar ruang di antara dua gunungan (40% lebar gunungan terlihat), agar huruf tidak jatuh di atas ornamen */
+.page__body.cover { gap: 0; padding-inline: calc(clamp(150px, 52%, 300px) * .4 + 6px); }
 
 .cover__eyebrow { font-size: 2.5rem; color: var(--gold-ink); }
 
@@ -161,18 +162,18 @@ img, svg { display: block; }
   flex-direction: column;
   align-items: center;
   margin-top: .6rem;
-  font-size: clamp(3.3rem, 7.6dvh, 4.8rem);
+  font-size: clamp(3rem, 6.6dvh, 4.4rem);
   line-height: .92;
 }
-.cover__names span:last-child { margin-left: .6em; }
-.cover__names span:first-child { margin-right: .6em; }
+.cover__names span:last-child { margin-left: .35em; }
+.cover__names span:first-child { margin-right: .35em; }
 .cover__amp { font-size: .6em; color: var(--gold-ink); line-height: 1; }
 
 .cover__date {
   margin-top: 1.6rem;
-  font-size: 1.05rem;
+  font-size: .95rem;
   font-weight: 600;
-  letter-spacing: .2em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gold-ink);
 }
@@ -284,7 +285,9 @@ img, svg { display: block; }
 .denah__road-in path { fill: none; stroke: #fff; stroke-width: 12; stroke-linecap: round; }
 .denah__label text { font-size: 9.5px; font-weight: 500; fill: var(--ink); }
 .denah__label--road text { font-size: 8.5px; font-weight: 500; fill: var(--ink-soft); }
-.denah__label--venue text { font-size: 10px; font-weight: 600; fill: var(--pin); }
+.denah__label--venue text { font-size: 10px; font-weight: 700; letter-spacing: .04em; fill: var(--ink); }
+.denah__label--venue .denah__venue-name { font-size: 8.5px; font-weight: 500; letter-spacing: 0; fill: var(--pin); }
+.denah__label--vertical text { font-size: 7px; }
 .denah__poi circle { fill: var(--ink); }
 .denah__pin ellipse { fill: none; stroke: var(--gold); stroke-width: 1.6; }
 .denah__pin path { fill: var(--pin); }

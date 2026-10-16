@@ -109,7 +109,7 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 
 **US-5 — Halaman 3: Denah lokasi** *(seperti `3.jpeg`)*
 - [ ] Judul "Denah Lokasi" (script) dan teks alamat lengkap.
-- [ ] Denah dibuat ulang sebagai **SVG inline**. Isinya: Jl. Slamet Riyadi (Purwosari ↔ Gladag), Novotel, Sami Luwes, Tumurun Museum, Pasar Kembang, pin LOKASI ndalem Tjokrosukarnan, dan panah Utara "U".
+- [ ] Denah dibuat ulang sebagai **SVG inline** mengikuti `3b.jpeg`. Isinya: Jl. Slamet Riyadi (Purwosari ↔ Gladag), Jl. Honggowongso (label tegak), Jl. Dr. Rajiman, Novotel, Sami Luwes, Sate Kambing Pak Manto (label tegak), Tumurun Museum, Pasar Kembang, pin "LOKASI / Ndalem Tjokrosukarnan", dan panah Utara "U".
 - [ ] Tombol utama **"Buka Google Maps"** membuka `https://maps.app.goo.gl/uGNZ8pQ9KB5hsvbt7` di tab baru (`rel="noopener"`).
 - [ ] QR code berupa SVG statis berisi link yang sama, dengan label "SCAN ME". Harus terbaca kamera iOS dan Android dari layar laptop. Penempatannya mengikuti §2.5.5.
 
