@@ -145,17 +145,26 @@ const visiblePage = (page) => page.evaluate(() => {
     check("fokus kembali ke tombol pemicu", focused === "bab-sekitar", `(${focused})`);
     check("tetap di halaman 4", (await visiblePage(page)) === 3);
 
-    await page.click("[data-modal='bab-jawa']");
-    check("kartu 2 membuka modal", await isOpen("bab-jawa"));
+    check("hanya ada satu kartu artikel (wisata)", (await page.$$eval(".chapter", (els) => els.length)) === 1);
+    check("artikel Pernikahan Jawa sudah dihapus", (await page.$("#bab-jawa")) === null);
+    // urutan dari yang terdekat: label jarak (m/km) harus naik
+    const dists = await page.$$eval("#bab-sekitar .sheet__dist", (els) => els.map((e) => {
+      const m = /([\d,]+)\s*(m|km)/.exec(e.textContent);
+      return parseFloat(m[1].replace(",", ".")) * (m[2] === "km" ? 1000 : 1);
+    }));
+    check("artikel wisata diurutkan dari yang terdekat", dists.length === 8 && dists.every((d, k) => k === 0 || d >= dists[k - 1]), JSON.stringify(dists));
+    check("Koeslan Coffee Roastery tercantum", (await page.textContent("#bab-sekitar")).includes("Koeslan Coffee Roastery"));
+
+    await page.click("[data-modal='bab-sekitar']");
     await page.goBack();
     await page.waitForTimeout(150);
-    check("tombol Back menutup modal", !(await isOpen("bab-jawa")));
+    check("tombol Back menutup modal", !(await isOpen("bab-sekitar")));
     check("Back tidak keluar dari halaman 4", (await visiblePage(page)) === 3);
 
-    await page.click("[data-modal='bab-jawa']");
-    await page.click("#bab-jawa [data-close]");
+    await page.click("[data-modal='bab-sekitar']");
+    await page.click("#bab-sekitar [data-close]");
     await page.waitForTimeout(150);
-    check("tombol × menutup modal", !(await isOpen("bab-jawa")));
+    check("tombol × menutup modal", !(await isOpen("bab-sekitar")));
 
     await page.click(".secret-link");
     check("'Tidak untuk dibuka' membuka modal rekening", await isOpen("bab-hadiah"));
@@ -172,10 +181,10 @@ const visiblePage = (page) => page.evaluate(() => {
     await page.waitForTimeout(150);
     check("Esc menutup modal rekening", !(await isOpen("bab-hadiah")));
 
-    await page.click("[data-modal='bab-jawa']");
+    await page.click("[data-modal='bab-sekitar']");
     await page.mouse.click(195, 20); // area backdrop di atas sheet
     await page.waitForTimeout(150);
-    check("tap backdrop menutup modal", !(await isOpen("bab-jawa")));
+    check("tap backdrop menutup modal", !(await isOpen("bab-sekitar")));
     await ctx.close();
   }
 

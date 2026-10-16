@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | v0.10 — musik latar versi lite, kartu rekening bercorak |
+| **Status** | v0.11 — artikel wisata sekitar ndalem, artikel Pernikahan Jawa dihapus |
 | **Tanggal** | 2 Oktober 2026 |
 | **Pemilik** | Muhammad Hammam Islami |
 | **Hari H** | Minggu, 29 November 2026 |
@@ -61,9 +61,9 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 [Hal 3 · Denah] Peta ilustrasi + tombol "Buka Google Maps" + QR
         │  geser kiri  /  tombol ›
         ▼
-[Hal 4 · Penutup] Kami yang berbahagia + 2 kartu bab
-        ├── "Mengenal sekitar ndalem Tjokrosukarnan" → modal
-        └── "Pernikahan Jawa?"               → modal
+[Hal 4 · Penutup] Kami yang berbahagia + kartu wisata
+        ├── "Lokasi wisata sekitar ndalem Tjokrosukarnan" → modal
+        └── "Tidak untuk dibuka"                        → modal rekening
 ```
 
 ### 2.3 User Stories & Acceptance Criteria
@@ -113,12 +113,12 @@ Tamu klik link WA (https://hammamcahaya.github.io/?tamu=Bapak+Anto)
 - [ ] Tombol utama **"Buka Google Maps"** membuka `https://maps.app.goo.gl/uGNZ8pQ9KB5hsvbt7` di tab baru (`rel="noopener"`).
 - [ ] QR code berupa SVG statis berisi link yang sama, dengan label "SCAN ME". Harus terbaca kamera iOS dan Android dari layar laptop. Penempatannya mengikuti §2.5.5.
 
-**US-6 — Halaman 4: Penutup & bab cerita** *(seperti `5.jpeg`)*
-- [ ] Bingkai amplop, "Kami yang berbahagia :", Bapak Muryadi / Ibu Rusnani (kiri), Bapak Muh Syafei (Alm) / Ibu Sri Suwarni, AMK (kanan), dan "Cahaya & Hammam" (script).
-- [ ] Dua kartu bab: **"Mengenal sekitar ndalem Tjokrosukarnan"** dan **"Pernikahan Jawa?"**, masing-masing dengan teks kecil "Baca selengkapnya ›".
-- [ ] Modal memakai `<dialog>` dengan `showModal()`. Modal bisa ditutup dengan tombol ×, tap backdrop, Esc, atau tombol Back browser di HP. Fokus kembali ke tombol pemicu setelah modal ditutup.
-- [ ] Swipe halaman nonaktif selama modal terbuka, dan scroll di dalam modal tidak ikut menggulir halaman di belakangnya (`overscroll-behavior: contain`).
-- [ ] Isi modal diambil dari [konten/naskah-modal.md](konten/naskah-modal.md). Modal 1 berisi sejarah kawasan sekitar gedung (Jl. Dr. Radjiman, Pasar Kembang, Taman Sriwedari, Radya Pustaka, Tumurun, Sami Luwes, Laweyan), dan Modal 2 berisi rangkaian pernikahan adat Jawa.
+**US-6 — Halaman 4: Penutup & lokasi wisata** *(seperti `5.jpeg`; diubah di v0.11)*
+- [ ] Bingkai amplop dengan sudut membulat yang menempel di pojok kiri-kanan halaman, "Kami yang berbahagia :", nama orang tua kedua mempelai, dan "Cahaya & Hammam" (script).
+- [ ] Satu kartu artikel: **"Lokasi wisata sekitar ndalem Tjokrosukarnan"**. Artikel "Pernikahan Jawa?" dihapus di v0.11.
+- [ ] Tempat diurutkan dari yang terdekat ke ndalem, dengan label jarak garis lurus: Pasar Kembang (± 100 m), Tumurun Private Museum (± 200 m), House of Danar Hadi (± 400 m), Museum Radya Pustaka (± 400 m), Taman Sriwedari dan Wayang Orang (± 500 m), Pasar Klewer (± 1,2 km), Koeslan Coffee Roastery (± 1,8 km), Kampung Batik Laweyan (± 2,2 km). Koordinat dari OpenStreetMap; posisi Koeslan diperkirakan dari nomor rumahnya. Setiap tempat punya foto berlisensi bebas beserta kredit, kecuali Koeslan (tidak ada foto berlisensi bebas).
+- [ ] Modal memakai `<dialog>` dengan `showModal()`; bisa ditutup dengan ×, tap backdrop, Esc, atau tombol Back. Fokus kembali ke tombol pemicu.
+- [ ] Di bawah kartu ada tombol "Tidak untuk dibuka" yang cukup terlihat (ikon amplop, garis putus-putus emas) dan membuka modal rekening (US-8).
 
 **US-7 — Preview saat dibagikan**
 *As a mempelai, I want to link terlihat menarik saat dikirim di WhatsApp so that tamu terdorong untuk membuka.*
@@ -323,7 +323,7 @@ Jadwal rilis dan pengiriman undangan ditentukan sendiri oleh pemilik. Fase di ba
 - **Font script** sempat dicoba Brittany Signature, lalu dikembalikan ke Allura (SIL OFL).
 - **Gunungan:** halaman 1 memakai gunungan kiri-kanan di tengah tinggi halaman; halaman 2 dan 4 satu gunungan samar (opacity 13%) di tengah seperti tanda air; halaman 3 gunungan kiri-kanan di bagian bawah.
 - **Motif latar** sempat dicoba pola mandala bunga dari referensi, lalu dikembalikan ke motif ceplok bunga buatan sendiri ([tools/gen_motif.py](tools/gen_motif.py)).
-- **Foto artikel**: 7 foto di modal 1 dan 3 foto di modal 2 (siraman, panggih, sungkeman), semuanya dari Wikimedia Commons berlisensi bebas (CC BY, CC BY-SA, CC0, domain publik). Kredit dan tautan lisensi ditampilkan di bawah setiap foto. Foto dipotong 3:2 dan dikompres WebP (total 456 KB, dimuat hanya saat modal dibuka). Tidak ada foto berlisensi bebas untuk Tumurun (diganti lukisan Raden Saleh koleksi Tumurun), tarub, midodareni, dan ijab.
+- **Foto artikel**: 7 foto di artikel wisata, semuanya dari Wikimedia Commons berlisensi bebas (CC BY, CC BY-SA). Kredit dan tautan lisensi ditampilkan di bawah setiap foto. Foto dipotong 3:2 dan dikompres WebP, dimuat hanya saat modal dibuka. Tumurun memakai foto lukisan Raden Saleh koleksi Tumurun; Koeslan tanpa foto.
 - **Data inti** ditulis langsung di `index.html`, tidak di objek `CONFIG`.
 - **Hasil uji:** 49 uji otomatis lolos ([tests/run-tests.js](tests/run-tests.js)). Lighthouse mobile 100/100/100/100, total 171 KB, LCP 1,6 detik.
 - **Belum diuji:** perangkat fisik (iPhone/Android) dan preview WhatsApp asli.

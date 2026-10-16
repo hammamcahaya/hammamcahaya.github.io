@@ -196,7 +196,8 @@ img, svg { display: block; }
 
 /* ---------- Halaman 2 · Undangan ---------- */
 
-.invite { font-size: .86rem; }
+/* halaman 2 tidak punya gunungan di sisi, jadi kolom isi boleh lebih lebar (tetap di dalam bingkai) */
+.page__body.invite { font-size: .86rem; padding-inline: max(30px, 7%); }
 
 .salam { font-weight: 500; line-height: 1.6; }
 
@@ -222,6 +223,7 @@ img, svg { display: block; }
 /* gelar ditulis dengan huruf yang sama dengan nama, tetapi tidak terpisah dari baris nama */
 .couple__degree { white-space: nowrap; }
 .couple__parent { margin-top: .3rem; font-size: .82rem; color: var(--ink-soft); }
+.couple__address { margin-top: .15rem; font-size: .74rem; font-style: italic; line-height: 1.5; color: var(--ink-soft); }
 .couple__with { margin: .9rem 0 .3rem; font-family: var(--script); font-size: 1.7rem; color: var(--gold-ink); line-height: 1; }
 
 .when {
@@ -386,21 +388,26 @@ img, svg { display: block; }
 .chapter__title { font-size: .98rem; font-weight: 600; color: var(--gold-ink); line-height: 1.35; }
 .chapter__hint { font-size: .78rem; color: var(--ink-soft); line-height: 1.45; }
 
-/* tautan kecil di dasar halaman 4: sengaja tidak menonjol */
+/* tombol "Tidak untuk dibuka" di dasar halaman 4: amplop bergaris putus-putus */
 .secret-link {
-  margin-top: 2.2rem;
-  padding: .6rem .8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 2rem;
   min-height: 44px;
-  border: 0;
-  background: none;
-  font-size: .75rem;
-  color: var(--ink-soft);
-  text-decoration: underline;
-  text-decoration-color: rgba(84, 68, 58, .35);
-  text-underline-offset: 3px;
+  padding: .55rem 1.2rem;
+  border: 1.5px dashed var(--gold);
+  border-radius: 999px;
+  background: rgba(251, 247, 240, .9);
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--gold-ink);
   cursor: pointer;
+  transition: background-color .2s;
 }
-.secret-link:hover { color: var(--gold-ink); }
+.secret-link svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; }
+.secret-link:hover { background: #fff; }
 
 /* ---------- Tombol musik ---------- */
 
@@ -541,13 +548,25 @@ img, svg { display: block; }
 }
 .sheet__body > * { max-width: 38rem; margin-inline: auto; }
 .sheet__body > p + p { margin-top: .9rem; }
-.sheet__body h3 {
-  margin-top: 1.6rem;
-  margin-bottom: .35rem;
+.sheet__body h4 {
+  margin: 1.6rem 0 .45rem;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
   color: var(--gold-ink);
+}
+/* label jarak dari lokasi acara di samping nama tempat */
+.sheet__dist {
+  display: inline-block;
+  margin-left: .35rem;
+  padding: .05rem .5rem;
+  border: 1px solid rgba(126, 84, 32, .35);
+  border-radius: 999px;
+  font-size: .75rem;
+  font-weight: 500;
+  vertical-align: .1em;
+  white-space: nowrap;
+  color: var(--ink-soft);
 }
 .sheet__lead { color: var(--ink-soft); }
 .sheet__end {
@@ -642,30 +661,6 @@ img, svg { display: block; }
 .account__copy.is-copied .icon-check { opacity: 1; }
 
 .account__status { min-height: 1.3em; font-size: .78rem; color: #D6B278; }
-
-.steps { list-style: none; padding: 0; counter-reset: step; }
-.steps > li { position: relative; padding-left: 2.6rem; counter-increment: step; }
-.steps > li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 1.55rem;
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  font-size: .85rem;
-  font-weight: 600;
-  line-height: 1;
-  color: var(--gold-ink);
-}
-.steps h3 { margin-top: 1.6rem; }
-
-.panggih { margin-top: .7rem; }
-.panggih dt { font-weight: 600; }
-.panggih dd { margin: 0 0 .7rem; }
 
 /* ---------- Layar lebar: lembaran di atas meja sogan ---------- */
 
