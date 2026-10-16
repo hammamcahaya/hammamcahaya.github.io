@@ -23,9 +23,10 @@ Setelah mengubah teks, buka situs di HP untuk memastikan tata letaknya masih rap
 |---|---|
 | Nama, orang tua, tanggal, jam, alamat | `index.html` halaman 1, 2, dan 4 |
 | Denah | SVG inline di `index.html` halaman 3 |
-| Warna & ukuran huruf | token `:root` di [css/style.css](css/style.css) |
+| Warna & ukuran huruf | token `:root` di [css/style.css](css/style.css) (tema v2 "Keraton Malam": halaman malam & kertas) |
 | Gunungan | Vektorisasi dari `referensi/gambar/kayon.png`: jalankan `python3 tools/prep_kayon.py`, lalu `tools/trace_kayon.js` (lihat di bawah) |
-| Motif latar | [tools/gen_motif.py](tools/gen_motif.py), lalu jalankan `python3 tools/gen_motif.py` |
+| Gunungan prada & motif truntum (v2) | [tools/gen_v2_assets.py](tools/gen_v2_assets.py), lalu jalankan `python3 tools/gen_v2_assets.py` |
+| Font Bodoni Moda & aksara Jawa (v2) | [tools/subset_fonts.py](tools/subset_fonts.py); aksara di sampul/penutup hanya memuat huruf yang dipakai, jadi ubah `AKSARA` bila teksnya diganti |
 | Musik latar | `assets/audio/yen-ing-tawang-lite.m4a` (lihat perintah ffmpeg di bawah) |
 | Gambar preview WhatsApp | [tools/og.html](tools/og.html), lalu jalankan `tools/make-og.js` (lihat di bawah) |
 
@@ -71,7 +72,7 @@ Push ke repo `hammamcahaya/hammamcahaya.github.io`, branch `main`. Aktifkan GitH
 
 ## Lisensi aset
 
-- Allura dan Poppins: SIL Open Font License.
+- Bodoni Moda, Noto Sans Javanese, dan Poppins: SIL Open Font License.
 - Foto artikel: Wikimedia Commons, kredit dan lisensi tercantum di bawah setiap foto di modal.
 - Gunungan: hasil vektorisasi `kayon.png` yang disediakan pemilik. Pastikan lisensi gambar sumbernya mengizinkan publikasi.
-- Motif latar dan denah dibuat untuk proyek ini.
+- Motif truntum dan denah dibuat untuk proyek ini.

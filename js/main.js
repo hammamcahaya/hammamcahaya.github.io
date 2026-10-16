@@ -1,4 +1,4 @@
-/* Undangan Cahaya & Hammam — nama tamu, penanda halaman, salin alamat, modal. Tanpa library. */
+/* Undangan Cahaya & Hammam — nama tamu, penanda halaman, gerak, salin alamat, modal. Tanpa library. */
 (() => {
   "use strict";
 
@@ -59,6 +59,27 @@
       scrollToPage(Number(el.dataset.go));
     });
   });
+
+  /* ---------------- Gerak ---------------- */
+
+  // "Buka Undangan": gunungan dikebutkan sebentar, seperti dalang membuka lakon
+  const cover = document.querySelector(".page--cover");
+  cover.querySelector(".btn--primary").addEventListener("click", () => {
+    cover.classList.remove("is-opening");
+    void cover.offsetWidth; // mulai ulang animasi bila tombol ditekan lagi
+    cover.classList.add("is-opening");
+  });
+
+  // elemen [data-reveal] muncul bertahap saat masuk layar; CSS yang menyembunyikannya
+  // yang masuk bersamaan diberi jeda berurutan
+  const revealer = new IntersectionObserver((entries) => {
+    entries.filter((e) => e.isIntersecting).forEach((entry, i) => {
+      entry.target.style.setProperty("--d", `${Math.min(i, 5) * 0.09}s`);
+      entry.target.classList.add("is-in");
+      revealer.unobserve(entry.target);
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll("[data-reveal]").forEach((el) => revealer.observe(el));
 
   /* ---------------- Salin teks (alamat & nomor rekening) ---------------- */
 
