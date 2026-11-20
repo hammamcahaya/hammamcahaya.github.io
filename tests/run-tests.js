@@ -128,6 +128,27 @@ const visiblePage = (page) => page.evaluate(() => {
   }
 
   /* ---------- 3. Modal ---------- */
+  if (VERSION === "v3") {
+    // v3 sengaja tanpa "Tidak untuk dibuka" (rekening) dan artikel wisata sekitar
+    console.log("Tanpa modal (v3)");
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    await page.goto(BASE + "#4");
+    check("tidak ada modal/dialog", (await page.$$("dialog")).length === 0);
+    check("tombol 'Tidak untuk dibuka' tidak ada", (await page.$(".secret-link")) === null);
+    const text = await page.textContent("body");
+    check("nomor rekening tidak tercantum", !text.includes("3920618714") && !text.includes("0154126119"));
+    check("artikel wisata tidak ada", (await page.$("[data-modal]")) === null && !text.includes("Pasar Klewer"));
+    const imgs = await page.$$eval(".gallery img", (els) => els.length);
+    check("galeri memuat 8 foto", imgs === 8, `(${imgs})`);
+    const broken = await page.evaluate(async () => {
+      const all = [...document.querySelectorAll("img")];
+      await Promise.all(all.map((i) => { i.loading = "eager"; return i.decode().catch(() => {}); }));
+      return all.filter((i) => !i.naturalWidth).map((i) => i.getAttribute("src"));
+    });
+    check("semua foto termuat", broken.length === 0, broken.join(", "));
+    await ctx.close();
+  } else {
   console.log("Modal bab");
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
@@ -188,6 +209,7 @@ const visiblePage = (page) => page.evaluate(() => {
     await page.waitForTimeout(150);
     check("tap backdrop menutup modal", !(await isOpen("bab-sekitar")));
     await ctx.close();
+  }
   }
 
   /* ---------- 4. Musik latar ---------- */

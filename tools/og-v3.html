@@ -1,0 +1,33 @@
+<!doctype html>
+<!-- Sumber gambar preview WhatsApp (1200x630). Buat ulang dengan: node tools/make-og.js v3 -->
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/v3/css/style.css">
+<style>
+  body { width: 1200px; height: 630px; overflow: hidden; }
+  .og { position: relative; width: 1200px; height: 630px; color: var(--on-malam); background: var(--malam); }
+  .og p { margin: 0; }
+  /* foto memenuhi sisi kanan, memudar ke gelap di kiri */
+  .og .photo { position: absolute; right: 0; top: 0; width: 880px; height: 630px; object-fit: cover; object-position: 50% 26%; }
+  .og::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--malam) 0%, var(--malam) 34%, rgba(27, 28, 30, .5) 46%, rgba(27, 28, 30, 0) 56%); }
+  .og .c { position: absolute; z-index: 1; left: 80px; top: 50%; transform: translateY(-50%); }
+  .og .t { font-size: 22px; font-weight: 500; letter-spacing: .4em; text-transform: uppercase; color: var(--on-malam-soft); }
+  .og .n { margin-top: 18px; font-family: var(--serif); font-weight: 500; font-size: 104px; line-height: 1; font-optical-sizing: none; font-variation-settings: "opsz" 28; }
+  .og .n .amp { font-size: .7em; color: var(--janur); }
+  .og .d { margin-top: 28px; font-size: 26px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; }
+  .og .v { margin-top: 10px; font-size: 22px; color: var(--on-malam-soft); }
+</style>
+</head>
+<body>
+  <div class="og">
+    <img class="photo" src="/assets/img/foto/sampul.webp" alt="">
+    <div class="c">
+      <p class="t">The Wedding of</p>
+      <p class="n">Cahaya <span class="amp">&amp;</span><br>Hammam</p>
+      <p class="d">Minggu, 29 November 2026</p>
+      <p class="v">ndalem Tjokrosukarnan, Surakarta</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -11,6 +11,7 @@ Selama desain belum ditetapkan, ada beberapa versi dengan isi yang sama dan tamp
 |---|---|---|
 | v1 | [v1/](v1/) | Kertas Gunungan: krem, ceplok, huruf tulisan tangan |
 | v2 | [v2/](v2/) | Keraton Malam: sogan gelap, emas prada, truntum, aksara Jawa |
+| v3 | [v3/](v3/) | Album Ndalem: foto prewedding, potret mempelai, galeri. Tanpa "Tidak untuk dibuka" dan artikel wisata |
 
 [index.html](index.html) di root sementara berisi halaman **pilih versi**. `?tamu=` diteruskan ke versi yang dibuka,
 mis. `http://localhost:8765/?tamu=Anto`. Satu versi juga bisa dibuka langsung: `/v2/?tamu=Anto`.
@@ -45,7 +46,7 @@ Tanpa `?tamu=`, undangan menampilkan "Bapak/Ibu/Saudara/i". Nama dipotong pada 6
 
 ## Mengubah isi
 
-Semua teks ada di `index.html` tiap versi (`v1/`, `v2/`), dan sumber naskah modal ada di [konten/naskah-modal.md](konten/naskah-modal.md).
+Semua teks ada di `index.html` tiap versi (`v1/`, `v2/`, `v3/`), dan sumber naskah modal ada di [konten/naskah-modal.md](konten/naskah-modal.md).
 Selama masih ada beberapa versi, perubahan isi harus dilakukan di tiap versi.
 Setelah mengubah teks, buka situs di HP untuk memastikan tata letaknya masih rapi.
 
@@ -57,10 +58,27 @@ Setelah mengubah teks, buka situs di HP untuk memastikan tata letaknya masih rap
 | Gunungan | Vektorisasi dari `referensi/gambar/kayon.png`: jalankan `python3 tools/prep_kayon.py`, lalu `tools/trace_kayon.js` (lihat di bawah) |
 | Gunungan prada & motif truntum (v2) | [tools/gen_v2_assets.py](tools/gen_v2_assets.py), lalu jalankan `python3 tools/gen_v2_assets.py` |
 | Font Bodoni Moda & aksara Jawa (v2) | [tools/subset_fonts.py](tools/subset_fonts.py); aksara di sampul/penutup hanya memuat huruf yang dipakai, jadi ubah `AKSARA` bila teksnya diganti |
+| Foto prewedding (v3) | `assets/img/foto/`, lihat "Foto prewedding" di bawah |
 | Musik latar | `assets/audio/yen-ing-tawang-lite.m4a` (lihat perintah ffmpeg di bawah) |
 | Gambar preview WhatsApp & gambar mini | `tools/og-vN.html`, lalu jalankan `tools/make-og.js vN` (lihat di bawah) |
 
 Jika gambar preview diubah setelah link pernah dikirim, tambahkan `?v=2` (atau naikkan angkanya) pada `og:image` di `index.html` agar WhatsApp mengambil gambar baru.
+
+## Foto prewedding (v3)
+
+Foto asli (Sakamata Studio, 1707x2560) diambil dari undangan Queen Invitation dan disimpan di
+`referensi/gambar/prewedding/` (tidak ikut repo). Yang dipublikasikan adalah versi WebP di `assets/img/foto/`:
+
+| File | Sumber | Ukuran |
+|---|---|---|
+| `sampul.webp` | DSCF0962 | lebar 1080, q70 |
+| `penutup.webp` | DSCF1068 | lebar 1080, q70 |
+| `cahaya.webp`, `hammam.webp` | cpw-116, cpp-114, dipotong setengah badan (3:4) | 720x960, q76 |
+| `galeri-1` … `galeri-8.webp` | DSCF0978, 0986, 0992, 0988, 1046, 1042, 1050, 1059 | lebar 600, q72 |
+
+```bash
+cwebp -q 70 -resize 1080 0 -metadata none referensi/gambar/prewedding/DSCF0962.jpg-scaled.jpeg -o assets/img/foto/sampul.webp
+```
 
 ## Membuat ulang musik versi lite
 
@@ -106,3 +124,4 @@ Push ke repo `hammamcahaya/hammamcahaya.github.io`, branch `main`. Aktifkan GitH
 - Foto artikel: Wikimedia Commons, kredit dan lisensi tercantum di bawah setiap foto di modal.
 - Gunungan: hasil vektorisasi `kayon.png` yang disediakan pemilik. Pastikan lisensi gambar sumbernya mengizinkan publikasi.
 - Motif truntum dan denah dibuat untuk proyek ini.
+- Foto prewedding: Sakamata Studio, milik mempelai. Tanda air studio sengaja dibiarkan.
