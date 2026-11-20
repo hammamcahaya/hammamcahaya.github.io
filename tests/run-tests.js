@@ -267,6 +267,14 @@ const visiblePage = (page) => page.evaluate(() => {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
     const page = await ctx.newPage();
     await page.goto(`${ROOT}?tamu=Bapak+Anto`);
+    if (!(await page.$("[data-versi]"))) {
+      // versi final sudah dipasang di root: halaman pilih versi memang tidak ada lagi
+      check("root menampilkan undangan (tanpa halaman pilih versi)", (await page.textContent("#guest-name")) === "Bapak Anto");
+      await ctx.close();
+      await browser.close();
+      console.log(failed ? `\n${VERSION}: ${failed} uji GAGAL` : `\n${VERSION}: semua uji lolos`);
+      process.exit(failed ? 1 : 0);
+    }
     const href = await page.getAttribute(`[data-versi='${VERSION}']`, "href");
     check(`tautan ${VERSION} membawa nama tamu`, href === `/${VERSION}/?tamu=Bapak+Anto`, `→ ${href}`);
     await page.click(`[data-versi='${VERSION}']`);

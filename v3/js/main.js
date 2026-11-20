@@ -62,7 +62,7 @@
 
   /* ---------------- Gerak ---------------- */
 
-  // "Buka Undangan": foto sampul sedikit mendekat sebelum halaman bergulir
+  // "Buka Undangan": monogram berdenyut sebentar sebelum halaman bergulir
   const cover = document.querySelector(".page--cover");
   cover.querySelector(".btn--primary").addEventListener("click", () => {
     cover.classList.remove("is-opening");
@@ -160,6 +160,22 @@
       playMusic();
     }
   });
+
+  /* ---------------- Hitung mundur ke akad nikah ---------------- */
+
+  const AKAD = Date.parse("2026-11-29T06:00:00+07:00");
+  const cd = ["d", "h", "m", "s"].map((k) => document.getElementById(`cd-${k}`));
+  const pad = (n) => String(n).padStart(2, "0");
+
+  function tick() {
+    const left = Math.max(0, Math.floor((AKAD - Date.now()) / 1000));
+    const parts = [Math.floor(left / 86400), Math.floor(left / 3600) % 24, Math.floor(left / 60) % 60, left % 60];
+    cd.forEach((el, i) => { el.textContent = pad(parts[i]); });
+    return left > 0;
+  }
+  if (tick()) {
+    const timer = window.setInterval(() => { if (!tick()) window.clearInterval(timer); }, 1000);
+  }
 
   /* ---------------- Mulai ---------------- */
 

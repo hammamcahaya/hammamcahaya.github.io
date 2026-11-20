@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'">
 <title>The Wedding of Cahaya &amp; Hammam</title>
 <meta name="description" content="Undangan pernikahan Cahaya &amp; Hammam, Minggu 29 November 2026 di ndalem Tjokrosukarnan, Surakarta.">
-<meta name="theme-color" content="#1B1C1E">
+<meta name="theme-color" content="#0B0B0B">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hammamcahaya.github.io/">
@@ -18,8 +18,8 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="/assets/img/gunungan.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/italiana.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/img/foto/sampul.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="/v3/css/style.css">
 <script src="/v3/js/main.js" defer></script>
@@ -29,16 +29,11 @@
 <main class="book" id="book">
 
     <!-- ============ Halaman 1 · Sampul ============ -->
-    <section class="page page--foto page--cover" id="hal-1" aria-label="Halaman 1 dari 4, sampul">
-      <img class="cover__photo" src="/assets/img/foto/sampul.webp" alt="" width="1080" height="1620" fetchpriority="high">
+    <section class="page page--cover" id="hal-1" aria-label="Halaman 1 dari 4, sampul">
+      <img class="bg" src="/assets/img/foto/sampul.webp" alt="" width="1080" height="1620" fetchpriority="high">
       <div class="page__body cover">
-        <p class="cover__eyebrow eyebrow">The Wedding of</p>
-        <h1 class="cover__names">
-          <span>Cahaya</span>
-          <span class="amp">&amp;</span>
-          <span>Hammam</span>
-        </h1>
-        <p class="cover__date">29 · 11 · 2026</p>
+        <p class="monogram" aria-hidden="true"><span>C</span><span>H</span></p>
+        <h1 class="cover__names">The Wedding of<br>Cahaya &amp; Hammam</h1>
 
         <div class="guest">
           <p class="guest__to">Kepada Yth. Bapak/Ibu/Saudara/i</p>
@@ -51,67 +46,108 @@
     </section>
 
     <!-- ============ Halaman 2 · Undangan ============ -->
-    <section class="page page--kertas page--invite" id="hal-2" aria-label="Halaman 2 dari 4, undangan">
-      <div class="page__frame" aria-hidden="true"></div>
+    <section class="page page--invite" id="hal-2" aria-label="Halaman 2 dari 4, undangan">
       <div class="page__body invite">
-        <p class="salam" data-reveal>Bismillahirrahmanirrahiim<br>Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
 
-        <blockquote class="ayat" data-reveal>
-          <p>Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berfikir.</p>
-          <cite>QS. Ar-Rum: 21</cite>
-        </blockquote>
-
-        <p class="lead" data-reveal>Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Semoga ridho-Mu tercurah mengiringi pernikahan putra-putri kami:</p>
-
-        <div class="couple">
-          <div class="person" data-reveal>
-            <img class="person__photo" src="/assets/img/foto/cahaya.webp" alt="Cahaya Dwi Dzullia berbusana Jawa hitam dan kain batik" width="720" height="960" loading="lazy" decoding="async">
-            <h2 class="person__name">Cahaya Dwi Dzullia<span class="person__degree">, S.Pd., M.Pd.</span></h2>
-            <p class="person__parent">Putri dari Bapak Muryadi &amp; Ibu Rusnani</p>
-            <p class="person__address">Perum Puri Kosambi Blok FF No.50, Duren, Klari, Karawang</p>
-          </div>
-          <p class="couple__with" data-reveal><span>dengan</span></p>
-          <div class="person" data-reveal>
-            <img class="person__photo" src="/assets/img/foto/hammam.webp" alt="Muhammad Hammam Islami berbusana beskap hitam dan kain batik" width="720" height="960" loading="lazy" decoding="async">
-            <h2 class="person__name">Muhammad Hammam Islami<span class="person__degree">, S.Kom.</span></h2>
-            <p class="person__parent">Putra dari Bapak Muh Syafei (Alm) &amp; Ibu Sri Suwarni, AMK</p>
-            <p class="person__address">Klodran RT 05/RW 01, Colomadu, Kab. Karanganyar, Jawa Tengah</p>
+        <!-- pembuka: foto penuh, nama besar -->
+        <div class="scene scene--hero">
+          <img class="bg" src="/assets/img/foto/hero.webp" alt="" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content">
+            <p class="eyebrow" data-reveal>The Wedding of</p>
+            <p class="names display" data-reveal><span>Cahaya</span><span>Hammam</span></p>
+            <p class="scene__date" data-reveal>Minggu, 29 November 2026</p>
           </div>
         </div>
 
-        <div class="when" data-reveal>
-          <div class="when__date">
-            <span class="when__day">Minggu</span>
-            <span class="when__num">29</span>
-            <span class="when__month">November 2026</span>
-          </div>
-          <div class="when__events">
-            <div class="when__event">
-              <h3>Akad Nikah</h3>
-              <p><span class="when__time">06.00</span> WIB sampai selesai</p>
+        <!-- ayat, hitung mundur, kalender -->
+        <div class="scene scene--ayat">
+          <img class="bg" src="/assets/img/foto/penutup.webp" alt="" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content">
+            <blockquote class="ayat" data-reveal>
+              <p>Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berfikir.</p>
+              <cite class="display">QS. Ar-Rum: 21</cite>
+            </blockquote>
+            <div class="countdown" id="countdown" data-reveal role="timer" aria-label="Hitung mundur menuju akad nikah">
+              <p><span id="cd-d">00</span><small>Hari</small></p>
+              <p><span id="cd-h">00</span><small>Jam</small></p>
+              <p><span id="cd-m">00</span><small>Menit</small></p>
+              <p><span id="cd-s">00</span><small>Detik</small></p>
             </div>
-            <div class="when__event">
-              <h3>Resepsi</h3>
-              <p><span class="when__time">09.00</span> WIB sampai selesai</p>
-            </div>
+            <a class="calendar-link" data-reveal href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Pernikahan+Cahaya+%26+Hammam&amp;dates=20261128T230000Z%2F20261129T050000Z&amp;location=ndalem+Tjokrosukarnan%2C+Jl.+Dr.+Rajiman+No.248%2C+Sriwedari%2C+Laweyan%2C+Surakarta&amp;details=Akad+Nikah+06.00+WIB%2C+Resepsi+09.00+WIB" target="_blank" rel="noopener">Simpan ke Kalender</a>
           </div>
         </div>
 
-        <address class="venue" data-reveal>
-          <strong>ndalem Tjokrosukarnan</strong>
-          Jl. Dr. Rajiman No.248, Sriwedari, Kec. Laweyan, Kota Surakarta, Jawa Tengah 57141
-        </address>
+        <!-- salam pembuka -->
+        <div class="block block--salam">
+          <p class="monogram monogram--small" aria-hidden="true" data-reveal><span>C</span><span>H</span></p>
+          <h2 class="block__title" data-reveal>Wedding Ceremony</h2>
+          <p class="salam" data-reveal>Bismillahirrahmanirrahiim<br>Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+          <p class="lead" data-reveal>Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Semoga ridho-Mu tercurah mengiringi pernikahan putra-putri kami:</p>
+        </div>
 
-        <p class="lead" data-reveal>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa dan restu kepada kedua mempelai.</p>
-        <p class="salam" data-reveal>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        <!-- mempelai -->
+        <div class="scene scene--person">
+          <img class="bg" src="/assets/img/foto/cahaya.webp" alt="Cahaya Dwi Dzullia berbusana Jawa hitam dan kain batik" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content person">
+            <p class="person__call display" aria-hidden="true" data-reveal>Cahaya</p>
+            <h2 class="person__name" data-reveal>Cahaya Dwi Dzullia<span class="person__degree">, S.Pd., M.Pd.</span></h2>
+            <p class="person__parent" data-reveal><b>Putri dari</b> Bapak Muryadi &amp; Ibu Rusnani</p>
+            <p class="person__address" data-reveal>Perum Puri Kosambi Blok FF No.50, Duren, Klari, Karawang</p>
+          </div>
+        </div>
+
+        <p class="couple__with" data-reveal><span class="amp">&amp;</span><span class="visually-hidden">dengan</span></p>
+
+        <div class="scene scene--person">
+          <img class="bg" src="/assets/img/foto/hammam.webp" alt="Muhammad Hammam Islami berbusana beskap hitam dan kain batik" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content person">
+            <p class="person__call display" aria-hidden="true" data-reveal>Hammam</p>
+            <h2 class="person__name" data-reveal>Muhammad Hammam Islami<span class="person__degree">, S.Kom.</span></h2>
+            <p class="person__parent" data-reveal><b>Putra dari</b> Bapak Muh Syafei (Alm) &amp; Ibu Sri Suwarni, AMK</p>
+            <p class="person__address" data-reveal>Klodran RT 05/RW 01, Colomadu, Kab. Karanganyar, Jawa Tengah</p>
+          </div>
+        </div>
+
+        <!-- save the date -->
+        <div class="scene scene--date">
+          <img class="bg" src="/assets/img/foto/simpan-tanggal.webp" alt="" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content">
+            <p class="save display" data-reveal><span>Save</span><span>The</span><span>Date</span></p>
+          </div>
+        </div>
+
+        <!-- acara -->
+        <div class="block block--events">
+          <div class="event" data-reveal>
+            <h3 class="event__title display">Akad Nikah</h3>
+            <p class="event__day">29</p>
+            <p class="event__month">Minggu, November 2026</p>
+            <p class="event__time">06.00 WIB sampai selesai</p>
+          </div>
+          <div class="event" data-reveal>
+            <h3 class="event__title display">Resepsi</h3>
+            <p class="event__day">29</p>
+            <p class="event__month">Minggu, November 2026</p>
+            <p class="event__time">09.00 WIB sampai selesai</p>
+          </div>
+
+          <address class="venue" data-reveal>
+            <strong>ndalem Tjokrosukarnan</strong>
+            Jl. Dr. Rajiman No.248, Sriwedari, Kec. Laweyan, Kota Surakarta, Jawa Tengah 57141
+          </address>
+          <a class="btn btn--line" href="#3" data-go="2" data-reveal>Lihat Denah</a>
+
+          <p class="lead" data-reveal>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa dan restu kepada kedua mempelai.</p>
+          <p class="salam" data-reveal>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+        </div>
+
       </div>
     </section>
 
     <!-- ============ Halaman 3 · Denah ============ -->
-    <section class="page page--kertas page--map" id="hal-3" aria-label="Halaman 3 dari 4, denah lokasi">
-      <div class="page__frame" aria-hidden="true"></div>
+    <section class="page page--map" id="hal-3" aria-label="Halaman 3 dari 4, denah lokasi">
       <div class="page__body map">
-        <h2 class="map__title" data-reveal>Denah Lokasi</h2>
+        <h2 class="map__title display" data-reveal>Denah Lokasi</h2>
         <address class="venue" data-reveal>
           <strong>ndalem Tjokrosukarnan</strong>
           Jl. Dr. Rajiman No.248, Sriwedari, Kec. Laweyan, Kota Surakarta, Jawa Tengah 57141
@@ -193,10 +229,10 @@
       </div>
     </section>
 
-    <!-- ============ Halaman 4 · Penutup ============ -->
-    <section class="page page--foto page--closing" id="hal-4" aria-label="Halaman 4 dari 4, penutup">
+    <!-- ============ Halaman 4 · Galeri & penutup ============ -->
+    <section class="page page--closing" id="hal-4" aria-label="Halaman 4 dari 4, penutup">
       <div class="page__body closing">
-        <p class="closing__eyebrow eyebrow" data-reveal>Galeri</p>
+        <h2 class="block__title block__title--big display" data-reveal>Prewedding</h2>
         <ul class="gallery" aria-label="Foto prewedding Cahaya dan Hammam">
           <li data-reveal><img src="/assets/img/foto/galeri-1.webp" alt="Cahaya berdiri di samping Hammam yang duduk, berlatar kembar mayang dan payung" width="600" height="900" loading="lazy" decoding="async"></li>
           <li data-reveal><img src="/assets/img/foto/galeri-2.webp" alt="Hammam duduk dan Cahaya berdiri di sisinya, bersanding di antara rangkaian janur" width="600" height="900" loading="lazy" decoding="async"></li>
@@ -208,24 +244,25 @@
           <li data-reveal><img src="/assets/img/foto/galeri-8.webp" alt="Cahaya dan Hammam duduk berdampingan di sofa sambil berbincang" width="600" height="900" loading="lazy" decoding="async"></li>
         </ul>
 
-        <figure class="closing__photo" data-reveal>
-          <img src="/assets/img/foto/penutup.webp" alt="Cahaya dan Hammam duduk membaca buku di bawah cahaya lampu" width="1080" height="1620" loading="lazy" decoding="async">
-        </figure>
-
-        <p class="closing__intro eyebrow" data-reveal>Kami yang berbahagia</p>
-        <div class="closing__families" data-reveal>
-          <p><span>Bapak Muryadi</span><span>Ibu Rusnani</span></p>
-          <p><span>Bapak Muh Syafei (Alm)</span><span>Ibu Sri Suwarni, AMK</span></p>
+        <div class="scene scene--end">
+          <img class="bg" src="/assets/img/foto/akhir.webp" alt="" width="1080" height="1620" loading="lazy" decoding="async">
+          <div class="scene__content">
+            <p class="eyebrow" data-reveal>Kami yang berbahagia</p>
+            <div class="closing__families" data-reveal>
+              <p><span>Bapak Muryadi</span><span>Ibu Rusnani</span></p>
+              <p><span>Bapak Muh Syafei (Alm)</span><span>Ibu Sri Suwarni, AMK</span></p>
+            </div>
+            <p class="names display" data-reveal><span>Cahaya</span><span>Hammam</span></p>
+            <p class="scene__date" data-reveal>Minggu, 29 November 2026</p>
+          </div>
         </div>
-        <p class="closing__names" data-reveal><span>Cahaya</span> <span class="amp">&amp;</span> <span>Hammam</span></p>
-        <p class="closing__date" data-reveal>Minggu, 29 November 2026</p>
       </div>
     </section>
 
 </main>
 
 <!-- Musik latar: preload="none" → baru diunduh setelah tamu menekan "Buka Undangan" atau tombol musik -->
-<audio id="bgm" src="/assets/audio/yen-ing-tawang-lite.m4a" preload="none" loop></audio>
+<audio id="bgm" src="/assets/audio/irama-laot-teduh-lite.m4a" preload="none" loop></audio>
 <button class="music-toggle" id="music-toggle" type="button" aria-label="Putar musik" aria-pressed="false">
   <svg class="icon-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
   <svg class="icon-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9.5l5 5M22 9.5l-5 5"/></svg>

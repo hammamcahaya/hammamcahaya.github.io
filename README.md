@@ -5,16 +5,17 @@ Tayang di **https://hammamcahaya.github.io/**.
 
 ## Versi desain
 
-Selama desain belum ditetapkan, ada beberapa versi dengan isi yang sama dan tampilan berbeda:
+**Versi final: v3.** [index.html](index.html) di root adalah salinan `v3/index.html` (CSS dan JS dimuat dari `/v3/`).
+Versi lain masih bisa dibuka langsung di `/v1/` dan `/v2/`:
 
 | Versi | Folder | Tema |
 |---|---|---|
 | v1 | [v1/](v1/) | Kertas Gunungan: krem, ceplok, huruf tulisan tangan |
 | v2 | [v2/](v2/) | Keraton Malam: sogan gelap, emas prada, truntum, aksara Jawa |
-| v3 | [v3/](v3/) | Album Ndalem: foto prewedding, potret mempelai, galeri. Tanpa "Tidak untuk dibuka" dan artikel wisata |
+| v3 | [v3/](v3/) | Album Ndalem: mengikuti tata letak undangan Queen Invitation (hitam, foto satu layar, Italiana + Outfit). Tanpa "Tidak untuk dibuka" dan artikel wisata |
 
-[index.html](index.html) di root sementara berisi halaman **pilih versi**. `?tamu=` diteruskan ke versi yang dibuka,
-mis. `http://localhost:8765/?tamu=Anto`. Satu versi juga bisa dibuka langsung: `/v2/?tamu=Anto`.
+Mengubah isi v3: edit `v3/index.html`, lalu salin lagi ke root dengan `cp v3/index.html index.html`.
+Kirim link tamu ke root, mis. `https://hammamcahaya.github.io/?tamu=Bapak+Anto`.
 
 Tiap versi berisi `index.html`, `css/style.css`, dan `js/main.js` sendiri. Gambar, font, dan musik dipakai bersama di `assets/`.
 Semua path ditulis absolut (`/assets/...`, `/v2/css/...`) agar `index.html` sebuah versi tetap berfungsi bila dipindah ke root.
@@ -28,7 +29,7 @@ Semua path ditulis absolut (`/assets/...`, `/v2/css/...`) agar `index.html` sebu
 **Menetapkan versi final (mis. v2)**
 1. `cp v2/index.html index.html` (menimpa halaman pilih versi). CSS dan JS tetap dimuat dari `/v2/`.
 2. Ubah `og:image` bila perlu, lalu uji: `ROOT_URL=http://localhost:8765/ BASE_URL=http://localhost:8765/ node tests/run-tests.js v2`
-   (uji "pilih versi" akan gagal karena halamannya sudah tidak ada, dan itu memang diharapkan).
+   (uji "pilih versi" otomatis berganti memeriksa bahwa root menampilkan undangan).
 3. Folder versi lain, `js/pilih-versi.js`, dan `assets/img/versi/` boleh dihapus. Jangan hapus folder versi yang dipilih.
 
 Sebelum versi final ditetapkan, kirim link tamu ke versi tertentu (`/v2/?tamu=...`), bukan ke root.
@@ -59,7 +60,7 @@ Setelah mengubah teks, buka situs di HP untuk memastikan tata letaknya masih rap
 | Gunungan prada & motif truntum (v2) | [tools/gen_v2_assets.py](tools/gen_v2_assets.py), lalu jalankan `python3 tools/gen_v2_assets.py` |
 | Font Bodoni Moda & aksara Jawa (v2) | [tools/subset_fonts.py](tools/subset_fonts.py); aksara di sampul/penutup hanya memuat huruf yang dipakai, jadi ubah `AKSARA` bila teksnya diganti |
 | Foto prewedding (v3) | `assets/img/foto/`, lihat "Foto prewedding" di bawah |
-| Musik latar | `assets/audio/yen-ing-tawang-lite.m4a` (lihat perintah ffmpeg di bawah) |
+| Musik latar | v1, v2: `assets/audio/yen-ing-tawang-lite.m4a`; v3: `assets/audio/irama-laot-teduh-lite.m4a` (lihat perintah ffmpeg di bawah) |
 | Gambar preview WhatsApp & gambar mini | `tools/og-vN.html`, lalu jalankan `tools/make-og.js vN` (lihat di bawah) |
 
 Jika gambar preview diubah setelah link pernah dikirim, tambahkan `?v=2` (atau naikkan angkanya) pada `og:image` di `index.html` agar WhatsApp mengambil gambar baru.
@@ -71,9 +72,12 @@ Foto asli (Sakamata Studio, 1707x2560) diambil dari undangan Queen Invitation da
 
 | File | Sumber | Ukuran |
 |---|---|---|
-| `sampul.webp` | DSCF0962 | lebar 1080, q70 |
-| `penutup.webp` | DSCF1068 | lebar 1080, q70 |
-| `cahaya.webp`, `hammam.webp` | cpw-116, cpp-114, dipotong setengah badan (3:4) | 720x960, q76 |
+| `sampul.webp` (sampul) | DSCF0962 | lebar 1080, q70 |
+| `hero.webp` (pembuka hal. 2) | DSCF0978 | lebar 1080, q70 |
+| `simpan-tanggal.webp` (Save the Date) | DSCF0988 | lebar 1080, q70 |
+| `akhir.webp` (penutup) | DSCF1046 | lebar 1080, q70 |
+| `penutup.webp` (latar ayat & hitung mundur) | DSCF1068 | lebar 1080, q70 |
+| `cahaya.webp`, `hammam.webp` | cpw-116, cpp-114 | lebar 1080, q72 |
 | `galeri-1` … `galeri-8.webp` | DSCF0978, 0986, 0992, 0988, 1046, 1042, 1050, 1059 | lebar 600, q72 |
 
 ```bash
@@ -90,11 +94,20 @@ ffmpeg -ss 2.4 -to 151 -i "referensi/music/yen ing tawang ono Lintang.mp3" -map 
   assets/audio/yen-ing-tawang-lite.m4a
 ```
 
+v3 memakai lagu dari undangan Queen Invitation (Sal Priadi, "Irama Laot Teduh"), disimpan di `referensi/music/irama-laot-teduh.mp3`.
+Lagu utuh 0:00–4:41.5 (2 detik hening di akhir dibuang), mono AAC 48 kbps:
+
+```bash
+ffmpeg -to 281.5 -i referensi/music/irama-laot-teduh.mp3 -map 0:a -vn -map_metadata -1 \
+  -ac 1 -af "afade=t=in:d=1.5,afade=t=out:st=277.5:d=4" -c:a aac -b:a 48k -movflags +faststart \
+  assets/audio/irama-laot-teduh-lite.m4a
+```
+
 ## Menjalankan di komputer
 
 ```bash
 python3 -m http.server 8765
-# buka http://localhost:8765/?tamu=Anto (pilih versi) atau http://localhost:8765/v2/?tamu=Anto
+# buka http://localhost:8765/?tamu=Anto (v3, versi final) atau http://localhost:8765/v1/?tamu=Anto
 ```
 
 ## Uji otomatis
@@ -120,7 +133,8 @@ Push ke repo `hammamcahaya/hammamcahaya.github.io`, branch `main`. Aktifkan GitH
 
 ## Lisensi aset
 
-- Bodoni Moda, Noto Sans Javanese, dan Poppins: SIL Open Font License.
+- Bodoni Moda, Noto Sans Javanese, Poppins, Italiana, dan Outfit: SIL Open Font License.
+- Huruf "Brown Sugar" di undangan Queen Invitation sengaja tidak dipakai (lisensinya tidak jelas); v3 memakai Italiana sebagai gantinya.
 - Foto artikel: Wikimedia Commons, kredit dan lisensi tercantum di bawah setiap foto di modal.
 - Gunungan: hasil vektorisasi `kayon.png` yang disediakan pemilik. Pastikan lisensi gambar sumbernya mengizinkan publikasi.
 - Motif truntum dan denah dibuat untuk proyek ini.
