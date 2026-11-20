@@ -197,7 +197,7 @@ img, svg { display: block; }
 
 /* ---------- Halaman 1 · Sampul ---------- */
 
-.page--cover .bg { object-position: 50% 22%; }
+.page--cover .bg { object-position: 50% 0%; }
 .page--cover::after {
   content: "";
   position: absolute;
