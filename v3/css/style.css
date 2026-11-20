@@ -421,6 +421,12 @@ img, svg { display: block; }
   object-fit: cover;
   background: var(--black-2);
 }
+/* jumlah foto ganjil: foto terakhir di tengah, selebar satu kolom */
+.gallery li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 3px);
+}
 
 .scene--end { margin-top: 6px; justify-content: flex-start; }
 .scene--end .bg { object-position: 50% 70%; }

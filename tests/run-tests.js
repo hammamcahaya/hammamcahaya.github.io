@@ -140,7 +140,7 @@ const visiblePage = (page) => page.evaluate(() => {
     check("nomor rekening tidak tercantum", !text.includes("3920618714") && !text.includes("0154126119"));
     check("artikel wisata tidak ada", (await page.$("[data-modal]")) === null && !text.includes("Pasar Klewer"));
     const imgs = await page.$$eval(".gallery img", (els) => els.length);
-    check("galeri memuat 8 foto", imgs === 8, `(${imgs})`);
+    check("galeri memuat 5 foto", imgs === 5, `(${imgs})`);
     const broken = await page.evaluate(async () => {
       const all = [...document.querySelectorAll("img")];
       await Promise.all(all.map((i) => { i.loading = "eager"; return i.decode().catch(() => {}); }));

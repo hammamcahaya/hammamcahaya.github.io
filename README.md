@@ -73,12 +73,11 @@ Foto asli (Sakamata Studio, 1707x2560) diambil dari undangan Queen Invitation da
 | File | Sumber | Ukuran |
 |---|---|---|
 | `sampul.webp` (sampul) | DSCF0962 | lebar 1080, q70 |
-| `hero.webp` (pembuka hal. 2) | DSCF0978 | lebar 1080, q70 |
+| `hero.webp` (pembuka hal. 2) | DSCF0996 | lebar 1080, q70 |
 | `simpan-tanggal.webp` (Save the Date) | DSCF0988 | lebar 1080, q70 |
-| `akhir.webp` (penutup) | DSCF1046 | lebar 1080, q70 |
-| `penutup.webp` (latar ayat & hitung mundur) | DSCF1068 | lebar 1080, q70 |
+| `penutup.webp` (latar ayat & hitung mundur, dan penutup) | DSCF1068 | lebar 1080, q70 |
 | `cahaya.webp`, `hammam.webp` | cpw-116, cpp-114 | lebar 1080, q72 |
-| `galeri-1` … `galeri-8.webp` | DSCF0978, 0986, 0992, 0988, 1046, 1042, 1050, 1059 | lebar 600, q72 |
+| `galeri-3, 4, 6, 7, 8.webp` | DSCF0992, 0988, 1042, 1050, 1059 (galeri-1, 2, 5 dihapus) | lebar 600, q72 |
 
 ```bash
 cwebp -q 70 -resize 1080 0 -metadata none referensi/gambar/prewedding/DSCF0962.jpg-scaled.jpeg -o assets/img/foto/sampul.webp
