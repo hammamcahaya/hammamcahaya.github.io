@@ -72,7 +72,7 @@ Foto asli (Sakamata Studio, 1707x2560) diambil dari undangan Queen Invitation da
 
 | File | Sumber | Ukuran |
 |---|---|---|
-| `sampul.webp` (sampul, latar layar lebar, preview WhatsApp) | DSCF0980 (dari folder Prewedding asli, 18% bagian atas dipotong) | 1080x1329, q70 |
+| `sampul.webp` (sampul, latar layar lebar, preview WhatsApp) | DSCF0983 (versi edit dari folder Prewedding, 18% bagian atas dipotong) | 1080x1328, q70 |
 | `hero.webp` (pembuka hal. 2) | DSCF0996 | lebar 1080, q70 |
 | `simpan-tanggal.webp` (Save the Date) | DSCF0988 | lebar 1080, q70 |
 | `penutup.webp` (latar ayat & hitung mundur, dan penutup) | DSCF1068 | lebar 1080, q70 |
